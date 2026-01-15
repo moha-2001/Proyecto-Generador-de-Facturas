@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - AutoFacturar</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    
+    <div class="sidebar">
+        <div class="logo">
+            <h2>NexoDigital</h2> </div>
+        <ul class="menu">
+            <li class="active"><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li> <li><a href="clientes.html"><i class="fas fa-users"></i> Clientes</a></li> <li><a href="facturas.html"><i class="fas fa-file-invoice"></i> Facturas</a></li> <li><a href="crear-factura.html"><i class="fas fa-plus-circle"></i> Nueva Factura</a></li>
+            <li><a href="perfil.html"><i class="fas fa-cog"></i> Perfil Empresa</a></li> </ul>
+        <button id="btnLogout" class="btn-logout">Cerrar Sesión</button>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Dashboard Principal</h1> <div class="user-info">
+                <span>Bienvenido, Admin</span>
+            </div>
+        </header>
+
+        <div class="cards-container">
+            <div class="card-stat">
+                <h3>Total Clientes</h3>
+                <p class="number" id="totalClientes">Cargando...</p>
+            </div>
+            <div class="card-stat">
+                <h3>Facturas Pendientes</h3>
+                <p class="number" id="facturasPendientes">Cargando...</p>
+            </div>
+            <div class="card-stat">
+                <h3>Facturas Pagadas</h3>
+                <p class="number" id="facturasPagadas">0</p>
+            </div>
+        </div>
+
+        <div class="actions-section">
+            <h3>Acciones Rápidas</h3>
+            <div class="buttons-row">
+                <a href="clientes.html" class="btn-action purple">
+                    <i class="fas fa-user-plus"></i> Nuevo Cliente
+                </a>
+                <a href="crear-factura.html" class="btn-action green">
+                    <i class="fas fa-plus"></i> Nueva Factura
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

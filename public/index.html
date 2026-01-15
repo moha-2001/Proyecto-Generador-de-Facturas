@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoFacturar - Registro</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="card">
+            <h2>Registro de Empresa</h2>
+            <p class="subtitle">Crea tu cuenta para empezar a gestionar facturas</p>
+            
+            <form id="registroForm">
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>Nombre / Razón Social *</label>
+                        <input type="text" id="nombre" required>
+                    </div>
+                    <div class="input-group">
+                        <label>CIF / NIF *</label>
+                        <input type="text" id="cif" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Email *</label>
+                    <input type="email" id="email" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>Teléfono</label>
+                        <input type="tel" id="telefono">
+                    </div>
+                    <div class="input-group">
+                        <label>Dirección</label>
+                        <input type="text" id="direccion">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>Contraseña *</label>
+                        <input type="password" id="password" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Confirmar *</label>
+                        <input type="password" id="confirmPassword" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary">Registrar Empresa</button>
+            </form>
+            <p class="footer-text">¿Ya tienes cuenta? <a href="#">Inicia sesión aquí</a></p>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

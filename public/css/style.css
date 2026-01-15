@@ -1,0 +1,342 @@
+:root {
+    --primary-color: #6c63ff; /* El morado/azul de tu diseño */
+    --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg-gradient);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    width: 100%;
+    max-width: 500px;
+}
+
+h2 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: #666;
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box; /* Para que el padding no rompa el ancho */
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 12px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s;
+}
+
+.btn-primary:hover {
+    background: #5a52d5;
+}
+
+.footer-text {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 0.85rem;
+}
+
+/* --- LAYOUT DEL DASHBOARD --- */
+body {
+    display: flex; /* Para poner sidebar y contenido lado a lado */
+    background: #f4f6f9; /* Color gris suave de fondo */
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    background: white;
+    height: 100vh;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar .logo h2 {
+    color: var(--primary-color);
+    margin-bottom: 40px;
+}
+
+.menu {
+    list-style: none;
+    padding: 0;
+}
+
+.menu li {
+    margin-bottom: 15px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #666;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.menu a:hover, .menu li.active a {
+    background: #f0f0ff;
+    color: var(--primary-color);
+}
+
+.btn-logout {
+    margin-top: auto;
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Contenido Principal */
+.main-content {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+}
+
+/* Tarjetas (Cards) */
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.card-stat {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    text-align: center;
+    border-top: 4px solid var(--primary-color); /* Decoración superior */
+}
+
+.card-stat:nth-child(2) { border-top-color: #fca5a5; } /* Rojo para pendientes */
+.card-stat:nth-child(3) { border-top-color: #34d399; } /* Verde para pagadas */
+
+.card-stat h3 {
+    font-size: 0.9rem;
+    color: #888;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.card-stat .number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+}
+
+/* Botones de Acción */
+.buttons-row {
+    display: flex;
+    gap: 20px;
+}
+
+.btn-action {
+    padding: 15px 30px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-action.purple { background: var(--primary-color); }
+.btn-action.green { background: #34d399; }
+
+
+/* Tabla de Ítems */
+.items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+}
+
+.items-table th {
+    background: #f8f9fa;
+    padding: 10px;
+    text-align: left;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.items-table td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.items-table input {
+    border: 1px solid #ddd;
+    padding: 8px;
+    width: 100%;
+}
+
+/* Botón pequeño para borrar fila */
+.btn-delete {
+    background: #ffdede;
+    color: #ff4d4d;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-secondary {
+    background: #e2e8f0;
+    color: #4a5568;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* Caja de Totales (A la derecha) */
+.totales-container {
+    width: 300px;
+    margin-left: auto; /* Empuja a la derecha */
+    margin-top: 20px;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+.grand-total {
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+    margin-top: 10px;
+}
+
+/* gestion de clienetes */
+/* --- ESTILOS PARA GESTIÓN DE CLIENTES --- */
+
+/* Cabecera con buscador y botón */
+.page-header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.search-bar {
+    display: flex;
+    gap: 10px;
+    background: white;
+    padding: 5px 15px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    width: 300px;
+}
+
+.search-bar input {
+    border: none;
+    outline: none;
+}
+
+/* Tabla de Clientes Genérica */
+.data-table {
+    width: 100%;
+    border-collapse: separate; /* Permite bordes redondeados */
+    border-spacing: 0;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.data-table th {
+    background: #f8f9fa;
+    padding: 15px;
+    text-align: left;
+    font-weight: 600;
+    color: #555;
+    border-bottom: 2px solid #eee;
+}
+
+.data-table td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+}
+
+/* Botones de acción pequeños en la tabla */
+.action-btn-small {
+    padding: 5px 10px;
+    border-radius: 4px;
+    color: white;
+    text-decoration: none;
+    font-size: 0.8rem;
+    margin-right: 5px;
+}
+
+.btn-edit { background: #3498db; } /* Azul */
+.btn-delete { background: #ff4d4d; } /* Rojo */

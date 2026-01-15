@@ -1,29 +1,52 @@
 const FacturaDAO = require('../dao/FacturaDAO');
+const NotificacionDAO = require('../dao/NotificacionDAO'); // <--- Importamos esto
+const { construirPDF } = require('../services/pdfService'); // <--- Importamos esto
+const path = require('path');
+const fs = require('fs');
 
 const crearFactura = async (req, res) => {
-    console.log("--> RECIBIDO EN EL BACKEND:", req.body);
     try {
         const datos = req.body;
 
-        // 1. Calcular totales automáticamente (Lógica de Negocio)
+        // 1. Cálculos matemáticos (Igual que antes)
         let subtotalCalculado = 0;
-        
-        // Recorremos los items para sumar precios
         datos.items.forEach(item => {
             item.subtotal = item.cantidad * item.precio_unitario;
             subtotalCalculado += item.subtotal;
         });
-
         datos.subtotal = subtotalCalculado;
-        datos.iva_amount = subtotalCalculado * 0.21; // IVA del 21%
+        datos.iva_amount = subtotalCalculado * 0.21;
         datos.total = datos.subtotal + datos.iva_amount;
 
-        // 2. Guardar en base de datos usando el DAO
+        // 2. Guardar Factura en BD
         const facturaGuardada = await FacturaDAO.crear(datos);
 
+        // 3. GENERAR EL PDF 📄
+        // Definimos dónde se guardará. Creamos la carpeta 'facturas' si no existe
+        const directorio = path.join(__dirname, '../../facturas');
+        if (!fs.existsSync(directorio)){
+            fs.mkdirSync(directorio);
+        }
+        
+        const nombreArchivo = `factura-${facturaGuardada.numero}.pdf`;
+        const rutaCompleta = path.join(directorio, nombreArchivo);
+
+        // Llamamos al servicio para que pinte el PDF
+        construirPDF(facturaGuardada, rutaCompleta);
+
+        // 4. CREAR NOTIFICACIÓN 🔔
+        await NotificacionDAO.crear({
+            empresa_id: facturaGuardada.empresa_id,
+            cliente_id: facturaGuardada.cliente_id,
+            factura_id: facturaGuardada._id,
+            mensaje: `Nueva factura generada: ${facturaGuardada.numero}`,
+            tipo: 'Info'
+        });
+
         res.status(201).json({
-            mensaje: 'Factura creada y calculada correctamente',
-            factura: facturaGuardada
+            mensaje: 'Factura creada, PDF generado y cliente notificado',
+            factura: facturaGuardada,
+            ruta_pdf: rutaCompleta
         });
 
     } catch (error) {

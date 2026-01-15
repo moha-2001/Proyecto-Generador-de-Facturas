@@ -1,4 +1,4 @@
-const mongoose = require('javascript');
+const mongoose = require('mongoose');
 
 const NotificacionSchema = new mongoose.Schema({
     empresa_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Empresa', required: true },

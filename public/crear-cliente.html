@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo Cliente - AutoFacturar</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo"><h2>NexoDigital</h2></div>
+        <ul class="menu">
+            <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li class="active"><a href="clientes.html"><i class="fas fa-users"></i> Clientes</a></li>
+            <li><a href="facturas.html"><i class="fas fa-file-invoice"></i> Facturas</a></li>
+            <li><a href="crear-factura.html"><i class="fas fa-plus-circle"></i> Nueva Factura</a></li>
+            <li><a href="perfil.html"><i class="fas fa-cog"></i> Perfil Empresa</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Añadir Nuevo Cliente</h1>
+            <a href="clientes.html" class="btn-action" style="background:#666;">Cancelar</a>
+        </header>
+
+        <div class="card" style="max-width: 800px; margin-top: 20px;">
+            <form id="crearClienteForm">
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>Nombre Fiscal / Razón Social *</label>
+                        <input type="text" id="nombreCli" required placeholder="Ej: Servicios Rápidos S.L.">
+                    </div>
+                    <div class="input-group">
+                        <label>CIF / NIF *</label>
+                        <input type="text" id="cifCli" required placeholder="B12345678">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>Email Principal *</label>
+                        <input type="email" id="emailCli" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Teléfono</label>
+                        <input type="tel" id="telCli">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Dirección Completa</label>
+                    <input type="text" id="dirCli" placeholder="Calle, Número, Ciudad y CP">
+                </div>
+
+                <button type="submit" class="btn-primary" style="margin-top: 20px;">
+                    <i class="fas fa-save"></i> Guardar Cliente
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/crear-cliente.js"></script>
+</body>
+</html>
