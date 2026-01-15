@@ -29,6 +29,13 @@ class EmpresaDAO {
             throw new Error('Empresa no encontrada');
         }
     }
+    async actualizar(id, nuevosDatos) {
+    try {
+        return await Empresa.findByIdAndUpdate(id, nuevosDatos, { new: true });
+    } catch (error) {
+        throw new Error('Error al actualizar empresa');
+    }
+}
 }
 
 module.exports = new EmpresaDAO();

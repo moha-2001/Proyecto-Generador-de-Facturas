@@ -21,3 +21,5 @@ app.listen(PORT, () => {
     console.log(`🚀 Servidor corriendo en puerto ${PORT}`);
 });
 app.use(express.static('public'));
+const path = require('path');
+app.use('/facturas', express.static(path.join(__dirname, '../facturas')));

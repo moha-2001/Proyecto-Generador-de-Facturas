@@ -25,7 +25,15 @@ class ClienteDAO {
         try {
             return await Cliente.findById(id);
         } catch (error) {
-            throw new Error('Cliente no encontrado');
+            console.error("Error en DAO buscarPorId:", error);
+            return null;
+        }
+    }
+    async buscarPorEmail(email) {
+        try {
+            return await Cliente.findOne({ email: email });
+        } catch (error) {
+            throw new Error('Error al buscar cliente');
         }
     }
 

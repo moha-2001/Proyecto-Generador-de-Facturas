@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Facturas - AutoFacturar</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo"><h2>NexoDigital</h2></div>
+        <ul class="menu">
+            <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="clientes.html"><i class="fas fa-users"></i> Clientes</a></li>
+            <li class="active"><a href="facturas.html"><i class="fas fa-file-invoice"></i> Facturas</a></li>
+            <li><a href="crear-factura.html"><i class="fas fa-plus-circle"></i> Nueva Factura</a></li>
+            <li><a href="perfil.html"><i class="fas fa-cog"></i> Perfil Empresa</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <header class="page-header-actions">
+            <h1>Mis Facturas</h1>
+            <a href="crear-factura.html" class="btn-action purple">
+                <i class="fas fa-plus"></i> Nueva Factura
+            </a>
+        </header>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Número</th>
+                    <th>Cliente</th>
+                    <th>Fecha Emisión</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="facturasTableBody">
+                <tr><td colspan="6" style="text-align: center;">Cargando...</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <script src="js/facturas.js"></script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Panel - Cliente</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="main-content" style="margin-left:0; width:100%; padding: 50px;">
+        <header style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+                <h1>Hola, <span id="nombreCliente">Cliente</span></h1>
+                <p>Bienvenido a tu área privada</p>
+            </div>
+            <button id="btnLogout" class="btn-logout">Cerrar Sesión</button>
+        </header>
+
+        <div class="card" style="margin-top:30px;">
+            <h3>Mis Facturas Recibidas</h3>
+            <table class="data-table" style="margin-top:20px;">
+                <thead>
+                    <tr>
+                        <th>Empresa Emisora</th>
+                        <th>Número</th>
+                        <th>Fecha</th>
+                        <th>Total</th>
+                        <th>Estado</th>
+                        <th>Descargar</th>
+                    </tr>
+                </thead>
+                <tbody id="facturasClienteTable">
+                    <tr><td colspan="6">Cargando...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // ------------------------------------------------------
+            // 1. LO PRIMERO: Activar el botón Cerrar Sesión
+            // (Lo ponemos aquí para que funcione aunque falle todo lo demás)
+            // ------------------------------------------------------
+            const btnLogout = document.getElementById('btnLogout');
+            if (btnLogout) {
+                btnLogout.addEventListener('click', () => {
+                    localStorage.clear(); // Borra IDs y nombres
+                    window.location.href = 'login.html'; // Manda al login
+                });
+            }
+
+            // ------------------------------------------------------
+            // 2. Verificar Sesión
+            // ------------------------------------------------------
+            const clienteId = localStorage.getItem('clienteId');
+            const nombre = localStorage.getItem('clienteNombre');
+            
+            if (!clienteId) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Pintar nombre si existe
+            const spanNombre = document.getElementById('nombreCliente');
+            if (spanNombre) spanNombre.textContent = nombre || 'Cliente';
+
+            // ------------------------------------------------------
+            // 3. Cargar Facturas (Dentro de Try/Catch para seguridad)
+            // ------------------------------------------------------
+            const tbody = document.getElementById('facturasClienteTable');
+            
+            try {
+                const res = await fetch(`/api/facturas/mis-facturas/${clienteId}`);
+                
+                if (!res.ok) throw new Error("Error al obtener datos");
+
+                const facturas = await res.json();
+                
+                tbody.innerHTML = ''; // Limpiar "Cargando..."
+
+                if (facturas.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No tienes facturas disponibles.</td></tr>';
+                    return;
+                }
+
+                facturas.forEach(fac => {
+                    // Lógica de colores según estado
+                    const estadoStyle = fac.estado === 'Pagada' 
+                        ? 'color:green; font-weight:bold;' 
+                        : 'color:orange; font-weight:bold;';
+                    
+                    // Nombre del archivo PDF
+                    const nombreArchivo = `factura-${fac.numero}.pdf`;
+
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${fac.empresa_id ? fac.empresa_id.nombre : 'Empresa desconocida'}</td>
+                            <td>${fac.numero}</td>
+                            <td>${new Date(fac.fecha_emision).toLocaleDateString()}</td>
+                            <td>${fac.total.toFixed(2)} €</td>
+                            <td style="${estadoStyle}">${fac.estado}</td>
+                            <td>
+                                <a href="/facturas/${nombreArchivo}" target="_blank" class="action-btn-small" style="background:#6c63ff; margin-right:5px; text-decoration:none; color:white; padding:5px;">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="/facturas/${nombreArchivo}" download class="action-btn-small" style="background:#666; text-decoration:none; color:white; padding:5px;">
+                                    <i class="fas fa-download"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+            } catch (error) {
+                console.error("Error cargando facturas:", error);
+                tbody.innerHTML = '<tr><td colspan="6" style="color:red; text-align:center;">Error de conexión o datos no disponibles.</td></tr>';
+            }
+        });
+    </script>
+</body>
+</html>

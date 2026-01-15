@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Cliente</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo"><h2>NexoDigital</h2></div>
+        <ul class="menu">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li class="active"><a href="clientes.html">Clientes</a></li>
+            <li><a href="facturas.html">Facturas</a></li>
+            <li><a href="perfil.html">Perfil</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1>Editar Cliente</h1>
+            <a href="clientes.html" class="btn-action" style="background:#666;">Cancelar</a>
+        </header>
+
+        <div class="card" style="margin-top: 20px;">
+            <form id="editarClienteForm">
+                <input type="hidden" id="clienteId"> <div class="form-row">
+                    <div class="input-group">
+                        <label>Nombre Fiscal</label>
+                        <input type="text" id="nombreCli" required>
+                    </div>
+                    <div class="input-group">
+                        <label>CIF / NIF</label>
+                        <input type="text" id="cifCli" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-group">
+                        <label>Email</label>
+                        <input type="email" id="emailCli" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Teléfono</label>
+                        <input type="tel" id="telCli">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Dirección</label>
+                    <input type="text" id="dirCli">
+                </div>
+
+                <button type="submit" class="btn-primary" style="margin-top: 20px;">
+                    Guardar Cambios
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/editar-cliente.js"></script>
+</body>
+</html>
