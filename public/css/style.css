@@ -340,3 +340,38 @@ body {
 
 .btn-edit { background: #3498db; } /* Azul */
 .btn-delete { background: #ff4d4d; } /* Rojo */
+
+/* --- SELECTOR DE ESTADO PERSONALIZADO --- */
+.status-select {
+    padding: 5px 10px;
+    border-radius: 20px; /* Bordes muy redondos */
+    border: none;
+    font-weight: bold;
+    font-size: 0.85rem;
+    cursor: pointer;
+    outline: none;
+    appearance: none; /* Quita la flecha fea por defecto en algunos navegadores */
+    text-align: center;
+    width: 100px;
+    transition: background 0.3s, color 0.3s;
+}
+
+/* Estado Pendiente (Naranja) */
+.status-select-pending {
+    background-color: #ffedd5;
+    color: #9a3412;
+    border: 1px solid #fed7aa;
+}
+
+/* Estado Pagada (Verde) */
+.status-select-paid {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+
+/* Efecto Hover */
+.status-select:hover {
+    opacity: 0.9;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}

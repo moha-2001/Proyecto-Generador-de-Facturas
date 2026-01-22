@@ -4,7 +4,7 @@ const FacturaSchema = new mongoose.Schema({
     empresa_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Empresa', required: true },
     cliente_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Cliente', required: true },
     numero: { type: String, required: true },
-    estado: { type: String, default: 'Pendiente' }, // Ej: Pendiente, Cobrada
+    estado: { type: String, enum: ['Pendiente', 'Pagada', 'Cancelada'], default: 'Pendiente' }, 
     fecha_emision: { type: Date, default: Date.now },
     fecha_vencimiento: { type: Date },
     items: [{

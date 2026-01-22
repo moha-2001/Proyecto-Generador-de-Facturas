@@ -51,10 +51,15 @@
                         <label>Fecha Vencimiento</label>
                         <input type="date" id="fechaVencimiento">
                     </div>
+                    <div class="input-group">
+                        <label>Estado Inicial</label>
+                        <select id="estadoFactura">
+                            <option value="Pendiente">Pendiente</option>
+                            <option value="Pagada">Pagada</option>
+                        </select>
+                    </div>
                 </div>
-
                 <h3 style="margin-top: 30px; border-bottom: 1px solid #eee; padding-bottom: 10px;">Ítems de la Factura</h3>
-                
                 <table class="items-table">
                     <thead>
                         <tr>
@@ -97,7 +102,6 @@
             </form>
         </div>
     </div>
-
     <script src="js/crear-factura.js"></script>
 </body>
 </html>

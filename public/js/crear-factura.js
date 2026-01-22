@@ -93,14 +93,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         const nuevaFactura = {
-            empresa_id: empresaId,
-            cliente_id: clienteSelect.value,
-            numero: document.getElementById('numeroFactura').value,
-            fecha_emision: document.getElementById('fechaEmision').value,
-            fecha_vencimiento: document.getElementById('fechaVencimiento').value,
-            items: items,
-            notas: document.getElementById('notas').value
-        };
+                empresa_id: empresaId,
+                cliente_id: clienteSelect.value,
+                numero: document.getElementById('numeroFactura').value,
+                fecha_emision: document.getElementById('fechaEmision').value,
+                fecha_vencimiento: document.getElementById('fechaVencimiento').value,
+                estado: document.getElementById('estadoFactura').value, 
+                items: items,
+                notas: document.getElementById('notas').value
+            };
 
         try {
             const res = await fetch('/api/facturas', {
