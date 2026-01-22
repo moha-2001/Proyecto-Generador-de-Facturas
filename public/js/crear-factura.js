@@ -122,4 +122,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             alert('Error de conexión');
         }
     });
+            // 3. Botón Cerrar Sesión
+    document.getElementById('btnLogout').addEventListener('click', () => {
+        localStorage.removeItem('empresaId');
+        window.location.href = 'login.html';
+    });
 });

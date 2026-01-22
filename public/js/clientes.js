@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const res = await fetch(`/api/clientes/${id}`, { method: 'DELETE' });
                 if (res.ok) {
                     alert("Cliente eliminado");
-                    cargarClientes(); // Recargar tabla
+                    cargarClientes(); 
                 } else {
                     alert("Error al eliminar");
                 }
@@ -68,4 +68,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     cargarClientes();
+        // 3. Botón Cerrar Sesión
+    document.getElementById('btnLogout').addEventListener('click', () => {
+        localStorage.removeItem('empresaId');
+        window.location.href = 'login.html';
+    });
 });

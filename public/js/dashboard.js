@@ -31,6 +31,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 3. Botón Cerrar Sesión
     document.getElementById('btnLogout').addEventListener('click', () => {
         localStorage.removeItem('empresaId');
-        window.location.href = 'index.html';
+        window.location.href = 'login.html';
     });
 });

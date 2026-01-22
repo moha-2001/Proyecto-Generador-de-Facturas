@@ -3,7 +3,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!empresaId) window.location.href = 'index.html';
 
     const tableBody = document.getElementById('facturasTableBody');
-
+                //  Botón Cerrar Sesión
+    document.getElementById('btnLogout').addEventListener('click', () => {
+        localStorage.removeItem('empresaId');
+        window.location.href = 'login.html';
+    });
     try {
         const res = await fetch(`/api/facturas/${empresaId}`);
         const facturas = await res.json();
@@ -55,12 +59,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
-// ✅ FUNCIÓN GLOBAL PARA CAMBIAR EL ESTADO
-// La definimos fuera del DOMContentLoaded para que el HTML pueda llamarla
 window.cambiarEstado = async (facturaId, selectElement) => {
     const nuevoEstado = selectElement.value;
-
-    // 1. Cambiar color visualmente al instante (Feedback inmediato)
     if (nuevoEstado === 'Pagada') {
         selectElement.classList.remove('status-select-pending');
         selectElement.classList.add('status-select-paid');
@@ -69,7 +69,6 @@ window.cambiarEstado = async (facturaId, selectElement) => {
         selectElement.classList.add('status-select-pending');
     }
 
-    // 2. Avisar al Backend
     try {
         const res = await fetch(`/api/facturas/${facturaId}/estado`, {
             method: 'PATCH',
@@ -78,12 +77,9 @@ window.cambiarEstado = async (facturaId, selectElement) => {
         });
 
         if (res.ok) {
-            // Opcional: Mostrar un toast o aviso pequeño
             console.log("Estado actualizado en BD");
         } else {
             alert("Error al actualizar estado en el servidor");
-            // Revertir cambio visual si falla
-            // (Aquí podrías recargar la página o volver a poner el valor anterior)
         }
     } catch (error) {
         console.error("Error de conexión:", error);

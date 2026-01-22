@@ -1,5 +1,4 @@
 const ClienteDAO = require('../dao/ClienteDAO');
-// Añadir al principio: const ClienteDAO = require('../dao/ClienteDAO');
 const bcrypt = require('bcryptjs');
 const loginCliente = async (req, res) => {
     try {
@@ -9,21 +8,17 @@ const loginCliente = async (req, res) => {
         if (!cliente) {
             return res.status(401).json({ error: 'Usuario no encontrado' });
         }
-
-        // ✅ Usamos el método seguro para comparar
         const esCorrecta = await cliente.compararPassword(password);
         if (!esCorrecta) {
             return res.status(401).json({ error: 'Contraseña incorrecta' });
         }
-
-        // ✅ DETECTAR SI REQUIERE CAMBIO DE CONTRASEÑA
         if (cliente.cambiar_password) {
             return res.json({
                 mensaje: 'Login correcto, pero requiere cambio de pass',
                 id: cliente._id,
                 nombre: cliente.nombre,
                 tipo: 'cliente',
-                requiereCambio: true // <--- AVISO AL FRONTEND
+                requiereCambio: true
             });
         }
 
@@ -68,16 +63,12 @@ const cambiarPasswordInicial = async (req, res) => {
     try {
         const { id } = req.params;
         const { nuevaPassword } = req.body;
-        
-        // Buscamos al cliente (Usamos el modelo directo o DAO si tienes método actualizar)
-        const Cliente = require('../models/Cliente'); 
+                const Cliente = require('../models/Cliente'); 
         const cliente = await Cliente.findById(id);
 
         if (!cliente) return res.status(404).json({ error: 'Cliente no encontrado' });
-
-        // Actualizamos
-        cliente.password = nuevaPassword; // El pre('save') del modelo la encriptará sola
-        cliente.cambiar_password = false; // Ya no necesita cambiarla
+        cliente.password = nuevaPassword; 
+        cliente.cambiar_password = false; 
         await cliente.save();
 
         res.json({ mensaje: 'Contraseña actualizada correctamente' });
@@ -90,11 +81,7 @@ const cambiarPasswordInicial = async (req, res) => {
 //  Obtener un cliente por ID (Para rellenar el formulario de edición)
 const obtenerClientePorId = async (req, res) => {
     try {
-        const cliente = await ClienteDAO.buscarPorId(req.params.id); // Asegúrate de tener este método en DAO o usa Cliente.findById
-        // Si no tienes el método en DAO, usa esto directo:
-        // const Cliente = require('../models/Cliente');
-        // const cliente = await Cliente.findById(req.params.id);
-        
+        const cliente = await ClienteDAO.buscarPorId(req.params.id); 
         if (!cliente) return res.status(404).json({ error: 'Cliente no encontrado' });
         res.json(cliente);
     } catch (error) {
@@ -138,8 +125,8 @@ module.exports = {
     obtenerClientes, 
     loginCliente, 
     cambiarPasswordInicial,
-    obtenerClientePorId, // <--- Nuevo
-    actualizarCliente,   // <--- Nuevo
-    eliminarCliente      // <--- Nuevo
+    obtenerClientePorId, 
+    actualizarCliente,   
+    eliminarCliente      
 };
 module.exports = { crearCliente, obtenerClientes, loginCliente, cambiarPasswordInicial, eliminarCliente, actualizarCliente, obtenerClientePorId };
