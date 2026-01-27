@@ -7,10 +7,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Función para cargar la tabla
     async function cargarClientes() {
         try {
-            const res = await fetch(`/api/clientes/${empresaId}`);
+            // 👇👇 AQUÍ ESTÁ EL CAMBIO IMPORTANTE 👇👇
+            // Antes era: /api/clientes/${empresaId}
+            // AHORA ES:  /api/clientes/empresa/${empresaId}
+            const res = await fetch(`/api/clientes/empresa/${empresaId}`);
+            
             const clientes = await res.json();
 
             tableBody.innerHTML = '';
+
+            // Si devuelve error o no es un array, lo manejamos
+            if (!Array.isArray(clientes)) {
+                console.error("Respuesta inesperada:", clientes);
+                return;
+            }
 
             if (clientes.length === 0) {
                 tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No tienes clientes.</td></tr>';
@@ -40,8 +50,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Asignar eventos a los botones de borrar
             document.querySelectorAll('.btn-delete').forEach(btn => {
                 btn.addEventListener('click', (e) => {
-                    const id = e.target.closest('button').dataset.id;
-                    confirmarBorrado(id);
+                    // Usamos closest para asegurar que pillamos el botón aunque clickemos en el icono
+                    const btnElement = e.target.closest('button');
+                    if (btnElement) {
+                        const id = btnElement.dataset.id;
+                        confirmarBorrado(id);
+                    }
                 });
             });
 
@@ -50,10 +64,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // Lógica de Borrado
+    // Lógica de Borrado (Esta se queda igual porque usa DELETE, no choca con GET)
     window.confirmarBorrado = async (id) => {
         if (confirm("¿Estás seguro de que quieres eliminar a este cliente? Se borrarán sus datos de acceso.")) {
             try {
+                // DELETE /api/clientes/:id funciona bien
                 const res = await fetch(`/api/clientes/${id}`, { method: 'DELETE' });
                 if (res.ok) {
                     alert("Cliente eliminado");
@@ -68,9 +83,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     cargarClientes();
-        // 3. Botón Cerrar Sesión
-    document.getElementById('btnLogout').addEventListener('click', () => {
-        localStorage.removeItem('empresaId');
-        window.location.href = 'login.html';
-    });
+    
+    // 3. Botón Cerrar Sesión
+    const btnLogout = document.getElementById('btnLogout');
+    if (btnLogout) {
+        btnLogout.addEventListener('click', () => {
+            localStorage.removeItem('empresaId');
+            window.location.href = 'login.html';
+        });
+    }
 });

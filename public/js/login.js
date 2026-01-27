@@ -29,7 +29,6 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
                 localStorage.setItem('clienteId', data.id);
                 localStorage.setItem('clienteNombre', data.nombre);
                 
-                // 🚨 COMPROBAMOS EL FLAG DE SEGURIDAD
                 if (data.requiereCambio) {
                     window.location.href = 'cambiar-password.html'; // Redirigir a cambio forzoso
                 } else {

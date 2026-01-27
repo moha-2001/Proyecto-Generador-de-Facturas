@@ -2,35 +2,39 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 1. Verificar si hay usuario logueado
     const empresaId = localStorage.getItem('empresaId');
     if (!empresaId) {
-        window.location.href = 'index.html'; // Si no hay ID, mandar al login
+        window.location.href = 'index.html';
         return;
     }
 
-    // 2. Cargar Estadísticas
+    //  Cargar Estadísticas
     try {
-        // A) Obtener Clientes
-        const respClientes = await fetch(`/api/clientes/${empresaId}`);
+        // Obtener Clientes
+        const respClientes = await fetch(`/api/clientes/empresa/${empresaId}`);
         const clientes = await respClientes.json();
-        document.getElementById('totalClientes').textContent = clientes.length || 0;
+        const total = Array.isArray(clientes) ? clientes.length : 0;
+        document.getElementById('totalClientes').textContent = total;
 
-        // B) Obtener Facturas
+        //  Obtener Facturas
         const respFacturas = await fetch(`/api/facturas/${empresaId}`);
         const facturas = await respFacturas.json();
 
-        // Calcular pendientes vs pagadas
-        const pendientes = facturas.filter(f => f.estado === 'Pendiente').length;
-        const pagadas = facturas.filter(f => f.estado === 'Pagada').length;
-
-        document.getElementById('facturasPendientes').textContent = pendientes;
-        document.getElementById('facturasPagadas').textContent = pagadas;
+        if (Array.isArray(facturas)) {
+            const pendientes = facturas.filter(f => f.estado === 'Pendiente').length;
+            const pagadas = facturas.filter(f => f.estado === 'Pagada').length;
+            document.getElementById('facturasPendientes').textContent = pendientes;
+            document.getElementById('facturasPagadas').textContent = pagadas;
+        }
 
     } catch (error) {
         console.error('Error cargando datos:', error);
     }
 
-    // 3. Botón Cerrar Sesión
-    document.getElementById('btnLogout').addEventListener('click', () => {
-        localStorage.removeItem('empresaId');
-        window.location.href = 'login.html';
-    });
+    // Botón Cerrar Sesión
+    const btnLogout = document.getElementById('btnLogout');
+    if(btnLogout) {
+        btnLogout.addEventListener('click', () => {
+            localStorage.removeItem('empresaId');
+            window.location.href = 'login.html';
+        });
+    }
 });

@@ -1,33 +1,34 @@
 const ClienteDAO = require('../dao/ClienteDAO');
 const bcrypt = require('bcryptjs');
+
+
 const loginCliente = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const cliente = await ClienteDAO.buscarPorEmail(email);
-
+        const Cliente = require('../models/Cliente');
+        const cliente = await Cliente.findOne({ email: email });
         if (!cliente) {
-            return res.status(401).json({ error: 'Usuario no encontrado' });
+            return res.status(401).json({ error: 'Email no encontrado' });
         }
-        const esCorrecta = await cliente.compararPassword(password);
+        let esCorrecta = false;
+        if (cliente.password === password) {
+            esCorrecta = true;
+        } else {
+            try {
+                esCorrecta = await bcrypt.compare(password, cliente.password);
+            } catch (e) {
+                esCorrecta = false;
+            }
+        }
         if (!esCorrecta) {
             return res.status(401).json({ error: 'Contraseña incorrecta' });
         }
-        if (cliente.cambiar_password) {
-            return res.json({
-                mensaje: 'Login correcto, pero requiere cambio de pass',
-                id: cliente._id,
-                nombre: cliente.nombre,
-                tipo: 'cliente',
-                requiereCambio: true
-            });
-        }
-
         res.json({ 
             mensaje: 'Login correcto', 
             id: cliente._id,
             nombre: cliente.nombre,
             tipo: 'cliente',
-            requiereCambio: false
+            requiereCambio: cliente.cambiar_password 
         });
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -81,11 +82,16 @@ const cambiarPasswordInicial = async (req, res) => {
 //  Obtener un cliente por ID (Para rellenar el formulario de edición)
 const obtenerClientePorId = async (req, res) => {
     try {
-        const cliente = await ClienteDAO.buscarPorId(req.params.id); 
-        if (!cliente) return res.status(404).json({ error: 'Cliente no encontrado' });
+        const { id } = req.params;
+        const Cliente = require('../models/Cliente'); 
+        const cliente = await Cliente.findById(id);
+        if (!cliente) {
+            return res.status(404).json({ error: 'Cliente no encontrado' });
+        }
         res.json(cliente);
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error(error);
+        res.status(500).json({ error: 'Error del servidor' });
     }
 };
 
@@ -93,17 +99,21 @@ const obtenerClientePorId = async (req, res) => {
 const actualizarCliente = async (req, res) => {
     try {
         const { id } = req.params;
-        const datos = req.body;
-        
-        // Importamos el modelo directamente para usar findByIdAndUpdate
+        const datosActualizados = req.body;
         const Cliente = require('../models/Cliente');
-        
-        // Evitamos sobreescribir la contraseña si no se envía
-        if (!datos.password) delete datos.password;
+        delete datosActualizados.password; 
+        delete datosActualizados.empresa_id; 
+        // Buscamos y actualizamos
+        const cliente = await Cliente.findByIdAndUpdate(id, datosActualizados, { new: true });
 
-        const clienteActualizado = await Cliente.findByIdAndUpdate(id, datos, { new: true });
-        res.json({ mensaje: 'Cliente actualizado', cliente: clienteActualizado });
+        if (!cliente) {
+            return res.status(404).json({ error: 'Cliente no encontrado' });
+        }
+
+        res.json({ mensaje: 'Datos actualizados correctamente', cliente });
+
     } catch (error) {
+        console.error("Error actualizando cliente:", error);
         res.status(500).json({ error: error.message });
     }
 };
@@ -118,7 +128,41 @@ const eliminarCliente = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+const cambiarPasswordSeguro = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { passwordActual, passwordNueva } = req.body;
+        
+        const Cliente = require('../models/Cliente');
+        const cliente = await Cliente.findById(id);
 
+        if (!cliente) return res.status(404).json({ error: 'Cliente no encontrado' });
+
+        // 1. Verificar contraseña actual (Híbrido: Texto plano o Hash)
+        let esCorrecta = false;
+        if (cliente.password === passwordActual) {
+            esCorrecta = true;
+        } else {
+            try {
+                esCorrecta = await bcrypt.compare(passwordActual, cliente.password);
+            } catch (e) { esCorrecta = false; }
+        }
+
+        if (!esCorrecta) {
+            return res.status(400).json({ error: 'La contraseña actual no es correcta' });
+        }
+
+        // 2. Guardar nueva (El modelo se encargará de encriptarla con el pre-save)
+        cliente.password = passwordNueva;
+        cliente.cambiar_password = false; // Ya no es necesario cambiarla
+        await cliente.save();
+
+        res.json({ mensaje: 'Contraseña actualizada correctamente' });
+
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
 // ACTUALIZA EL EXPORT FINAL ASÍ:
 module.exports = { 
     crearCliente, 
@@ -127,6 +171,6 @@ module.exports = {
     cambiarPasswordInicial,
     obtenerClientePorId, 
     actualizarCliente,   
-    eliminarCliente      
+    eliminarCliente,
+    cambiarPasswordSeguro
 };
-module.exports = { crearCliente, obtenerClientes, loginCliente, cambiarPasswordInicial, eliminarCliente, actualizarCliente, obtenerClientePorId };

@@ -1,5 +1,4 @@
 const Cliente = require('../models/Cliente');
-
 class ClienteDAO {
     // Crear un nuevo cliente
     async crear(datosCliente) {
@@ -10,7 +9,6 @@ class ClienteDAO {
             throw new Error('Error al crear el cliente en la base de datos: ' + error.message);
         }
     }
-
     // Listar todos los clientes de una empresa específica
     async listarPorEmpresa(empresaId) {
         try {
@@ -19,7 +17,6 @@ class ClienteDAO {
             throw new Error('Error al obtener los clientes: ' + error.message);
         }
     }
-
     // Buscar un cliente por su ID
     async buscarPorId(id) {
         try {

@@ -1,0 +1,169 @@
+
+:root {
+    --primary-color: #4a90e2;
+    --secondary-color: #2c3e50;
+    --accent-color: #e67e22;
+    --success-color: #2ecc71;
+    --danger-color: #e74c3c;
+    --light-gray: #f4f7f6;
+    --white: #ffffff;
+    --sidebar-width: 250px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    display: flex;
+    background-color: var(--light-gray);
+    min-height: 100vh;
+}
+
+/* --- SIDEBAR --- */
+.sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--white);
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    text-align: center;
+    margin-bottom: 40px;
+    color: var(--primary-color);
+}
+
+.menu {
+    list-style: none;
+    flex-grow: 1;
+}
+
+.menu li {
+    margin-bottom: 15px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #666;
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.menu a i { margin-right: 10px; }
+
+.menu li.active a, .menu a:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.btn-logout {
+    background: none;
+    border: 1px solid #ddd;
+    padding: 10px;
+    width: 100%;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #666;
+    transition: 0.3s;
+}
+
+.btn-logout:hover {
+    background: var(--danger-color);
+    color: white;
+    border-color: var(--danger-color);
+}
+
+/* --- CONTENIDO PRINCIPAL --- */
+.main-content {
+    margin-left: var(--sidebar-width);
+    width: calc(100% - var(--sidebar-width));
+    padding: 40px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.subtitle { color: #888; margin-top: 5px; }
+
+/* --- TARJETAS (CARDS) --- */
+.card {
+    background: var(--white);
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* --- TABLAS --- */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.data-table th, .data-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.data-table th {
+    background-color: #f8f9fa;
+    color: #555;
+    font-weight: 600;
+}
+
+/* --- ✅ NUEVO: ETIQUETAS DE ESTADO --- */
+.status-badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.status-pagada {
+    background-color: #eafaf1; /* Verde muy claro */
+    color: var(--success-color);
+}
+
+.status-pendiente {
+    background-color: #fef5e7; /* Naranja muy claro */
+    color: var(--accent-color);
+}
+
+/* --- ✅ NUEVO: BOTONES DE ACCIÓN --- */
+.action-btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    text-decoration: none;
+    color: white;
+    margin-right: 5px;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.action-btn:hover { opacity: 0.8; }
+.btn-view { background-color: #6c63ff; }
+.btn-download { background-color: #666; }
+.btn-delete { background-color: var(--danger-color); border: none; cursor: pointer;}

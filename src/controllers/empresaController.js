@@ -13,7 +13,6 @@ const registrarEmpresa = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
-
 const loginEmpresa = async (req, res) => {
     try {
         const { email, password } = req.body;

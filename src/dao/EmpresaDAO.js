@@ -1,7 +1,5 @@
 const Empresa = require('../models/Empresa');
-
 class EmpresaDAO {
-    
     // Registrar una nueva empresa
     async crear(datosEmpresa) {
         try {
@@ -11,8 +9,7 @@ class EmpresaDAO {
             throw new Error('Error al registrar la empresa: ' + error.message);
         }
     }
-
-    // Buscar si ya existe un email (para login)
+    // Buscar si ya existe un email 
     async buscarPorEmail(email) {
         try {
             return await Empresa.findOne({ email: email });
@@ -20,7 +17,6 @@ class EmpresaDAO {
             throw new Error('Error al buscar empresa');
         }
     }
-
     // Buscar por ID
     async buscarPorId(id) {
         try {
@@ -37,5 +33,4 @@ class EmpresaDAO {
     }
 }
 }
-
 module.exports = new EmpresaDAO();

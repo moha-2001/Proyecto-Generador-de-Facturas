@@ -94,7 +94,7 @@ body {
 .sidebar {
     width: 250px;
     background: white;
-    height: 100vh;
+    height: 95vh;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0,0,0,0.05);
     display: flex;

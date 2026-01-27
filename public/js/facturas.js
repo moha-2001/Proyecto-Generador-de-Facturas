@@ -3,11 +3,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (!empresaId) window.location.href = 'index.html';
 
     const tableBody = document.getElementById('facturasTableBody');
-                //  Botón Cerrar Sesión
-    document.getElementById('btnLogout').addEventListener('click', () => {
-        localStorage.removeItem('empresaId');
-        window.location.href = 'login.html';
-    });
+    
+    // Botón Cerrar Sesión
+    const btnLogout = document.getElementById('btnLogout');
+    if (btnLogout) {
+        btnLogout.addEventListener('click', () => {
+            localStorage.removeItem('empresaId');
+            window.location.href = 'login.html';
+        });
+    }
+
     try {
         const res = await fetch(`/api/facturas/${empresaId}`);
         const facturas = await res.json();
@@ -28,7 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             
             // Color inicial del select
             const colorClass = fac.estado === 'Pagada' ? 'status-select-paid' : 'status-select-pending';
-
+            
             const row = `
                 <tr>
                     <td><strong>${fac.numero}</strong></td>
@@ -45,9 +50,14 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <a href="/facturas/${nombreArchivo}" target="_blank" class="action-btn-small" style="background:#6c63ff; padding: 6px 10px;">
                             <i class="fas fa-eye"></i>
                         </a>
+                        
                         <a href="/facturas/${nombreArchivo}" download class="action-btn-small" style="background:#666; padding: 6px 10px;">
                             <i class="fas fa-download"></i>
                         </a>
+
+                        <button class="action-btn-small" style="background:#ef4444; padding: 6px 10px; border:none; cursor:pointer; color:white; margin-left:5px;" onclick="eliminarFactura('${fac._id}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
                     </td>
                 </tr>
             `;
@@ -59,6 +69,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 });
 
+// Función para cambiar estado (Pendiente <-> Pagada)
 window.cambiarEstado = async (facturaId, selectElement) => {
     const nuevoEstado = selectElement.value;
     if (nuevoEstado === 'Pagada') {
@@ -84,5 +95,30 @@ window.cambiarEstado = async (facturaId, selectElement) => {
     } catch (error) {
         console.error("Error de conexión:", error);
         alert("Error de conexión");
+    }
+};
+
+// NUEVA FUNCIÓN: ELIMINAR FACTURA
+window.eliminarFactura = async (id) => {
+    // 1. Preguntar confirmación
+    if (!confirm("⚠️ ¿Estás seguro de que quieres eliminar esta factura permanentemente?")) {
+        return;
+    }
+
+    try {
+        // 2. Llamar al backend
+        const res = await fetch(`/api/facturas/${id}`, { method: 'DELETE' });
+
+        if (res.ok) {
+            alert("Factura eliminada");
+            // 3. Recargar la página para ver los cambios
+            location.reload(); 
+        } else {
+            const data = await res.json();
+            alert("Error al eliminar: " + (data.error || "Desconocido"));
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Error de conexión al intentar borrar.");
     }
 };

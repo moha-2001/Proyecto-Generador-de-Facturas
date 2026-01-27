@@ -3,34 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <title>Mi Panel - Cliente</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style-portalcliente.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="main-content" style="margin-left:0; width:100%; padding: 50px;">
-        <header style="display:flex; justify-content:space-between; align-items:center;">
+
+    <div class="sidebar">
+        <div class="logo">
+            <h2>NexoDigital</h2>
+            <small style="display:block; margin-top:5px; color:#999;">Área Clientes</small>
+        </div>
+        
+        <ul class="menu">
+            <li class="active">
+                <a href="panel-cliente.html"><i class="fas fa-file-invoice-dollar"></i> Mis Facturas</a>
+            </li>
+            <li>
+                <a href="perfil-cliente.html"><i class="fas fa-user-cog"></i> Mi Perfil</a>
+            </li>
+        </ul>
+
+        <button id="btnLogout" class="btn-logout">
+            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+        </button>
+    </div>
+
+    <div class="main-content">
+        <header>
             <div>
-                <h1>Hola, <span id="nombreCliente">Cliente</span></h1>
-                <p>Bienvenido a tu área privada</p>
+                <h1>Hola, <span id="nombreCliente" style="color:var(--primary-color);">Cliente</span></h1>
+                <p class="subtitle">Bienvenido a tu espacio privado</p>
             </div>
-            <button id="btnLogout" class="btn-logout">Cerrar Sesión</button>
+
         </header>
 
-        <div class="card" style="margin-top:30px;">
-            <h3>Mis Facturas Recibidas</h3>
-            <table class="data-table" style="margin-top:20px;">
+        <div class="card">
+            <div style="margin-bottom:20px;">
+                <h3><i class="fas fa-history"></i> Historial de Facturas</h3>
+            </div>
+
+            <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Empresa Emisora</th>
-                        <th>Número</th>
+                        <th>Empresa</th>
+                        <th>Nº Factura</th>
                         <th>Fecha</th>
                         <th>Total</th>
                         <th>Estado</th>
-                        <th>Descargar</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody id="facturasClienteTable">
-                    <tr><td colspan="6">Cargando...</td></tr>
+                    <tr><td colspan="6" style="text-align:center; padding:20px;">Cargando facturas...</td></tr>
                 </tbody>
             </table>
         </div>
@@ -38,21 +62,19 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
-            // ------------------------------------------------------
-            // 1. LO PRIMERO: Activar el botón Cerrar Sesión
-            // (Lo ponemos aquí para que funcione aunque falle todo lo demás)
-            // ------------------------------------------------------
+            
+            // 1. Cerrar Sesión
             const btnLogout = document.getElementById('btnLogout');
             if (btnLogout) {
                 btnLogout.addEventListener('click', () => {
-                    localStorage.clear(); // Borra IDs y nombres
-                    window.location.href = 'login.html'; // Manda al login
+                    if(confirm("¿Seguro que quieres salir?")) {
+                        localStorage.clear();
+                        window.location.href = 'login.html';
+                    }
                 });
             }
 
-            // ------------------------------------------------------
-            // 2. Verificar Sesión
-            // ------------------------------------------------------
+            // 2. Verificar Login
             const clienteId = localStorage.getItem('clienteId');
             const nombre = localStorage.getItem('clienteNombre');
             
@@ -61,50 +83,54 @@
                 return;
             }
             
-            // Pintar nombre si existe
             const spanNombre = document.getElementById('nombreCliente');
             if (spanNombre) spanNombre.textContent = nombre || 'Cliente';
 
-            // ------------------------------------------------------
-            // 3. Cargar Facturas (Dentro de Try/Catch para seguridad)
-            // ------------------------------------------------------
+            // 3. Cargar Facturas
             const tbody = document.getElementById('facturasClienteTable');
             
             try {
                 const res = await fetch(`/api/facturas/mis-facturas/${clienteId}`);
-                
-                if (!res.ok) throw new Error("Error al obtener datos");
-
+                if (!res.ok) throw new Error("Error API");
                 const facturas = await res.json();
                 
-                tbody.innerHTML = ''; // Limpiar "Cargando..."
+                tbody.innerHTML = '';
 
                 if (facturas.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">No tienes facturas disponibles.</td></tr>';
+                    tbody.innerHTML = `
+                        <tr>
+                            <td colspan="6" style="text-align:center; padding:30px; color:#888;">
+                                <i class="fas fa-folder-open" style="font-size:2rem; display:block; margin-bottom:10px;"></i>
+                                No hay facturas disponibles.
+                            </td>
+                        </tr>`;
                     return;
                 }
 
                 facturas.forEach(fac => {
-                    // Lógica de colores según estado
-                    const estadoStyle = fac.estado === 'Pagada' 
-                        ? 'color:green; font-weight:bold;' 
-                        : 'color:orange; font-weight:bold;';
+                    //  LÓGICA CSS: Asignamos clases en lugar de estilos inline
+                    const claseEstado = fac.estado === 'Pagada' ? 'status-pagada' : 'status-pendiente';
+                    const iconoEstado = fac.estado === 'Pagada' ? '<i class="fas fa-check"></i>' : '<i class="fas fa-clock"></i>';
                     
-                    // Nombre del archivo PDF
                     const nombreArchivo = `factura-${fac.numero}.pdf`;
+                    const nombreEmpresa = fac.empresa_id ? fac.empresa_id.nombre : 'Empresa desconocida';
 
                     tbody.innerHTML += `
                         <tr>
-                            <td>${fac.empresa_id ? fac.empresa_id.nombre : 'Empresa desconocida'}</td>
+                            <td><strong>${nombreEmpresa}</strong></td>
                             <td>${fac.numero}</td>
                             <td>${new Date(fac.fecha_emision).toLocaleDateString()}</td>
-                            <td>${fac.total.toFixed(2)} €</td>
-                            <td style="${estadoStyle}">${fac.estado}</td>
+                            <td style="font-weight:bold;">${fac.total.toFixed(2)} €</td>
                             <td>
-                                <a href="/facturas/${nombreArchivo}" target="_blank" class="action-btn-small" style="background:#6c63ff; margin-right:5px; text-decoration:none; color:white; padding:5px;">
+                                <span class="status-badge ${claseEstado}">
+                                    ${iconoEstado} ${fac.estado}
+                                </span>
+                            </td>
+                            <td>
+                                <a href="/facturas/${nombreArchivo}" target="_blank" class="action-btn btn-view" title="Ver">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <a href="/facturas/${nombreArchivo}" download class="action-btn-small" style="background:#666; text-decoration:none; color:white; padding:5px;">
+                                <a href="/facturas/${nombreArchivo}" download class="action-btn btn-download" title="Descargar">
                                     <i class="fas fa-download"></i>
                                 </a>
                             </td>
@@ -113,8 +139,8 @@
                 });
 
             } catch (error) {
-                console.error("Error cargando facturas:", error);
-                tbody.innerHTML = '<tr><td colspan="6" style="color:red; text-align:center;">Error de conexión o datos no disponibles.</td></tr>';
+                console.error(error);
+                tbody.innerHTML = '<tr><td colspan="6" style="color:red; text-align:center;">Error de conexión.</td></tr>';
             }
         });
     </script>

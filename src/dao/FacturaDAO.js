@@ -1,7 +1,5 @@
 const Factura = require('../models/Factura');
-
 class FacturaDAO {
-
     // Crear factura
     async crear(datosFactura) {
         try {
@@ -11,7 +9,6 @@ class FacturaDAO {
             throw new Error('Error al guardar la factura: ' + error.message);
         }
     }
-
     // Listar facturas de una empresa (con datos del cliente incluidos)
     async listarPorEmpresa(empresaId) {
         try {
@@ -30,8 +27,8 @@ class FacturaDAO {
     async buscarPorId(id) {
         try {
             return await Factura.findById(id)
-                .populate('cliente_id')  // Trae datos del cliente
-                .populate('empresa_id'); // <--- ¡AÑADE ESTO! (Trae datos de la empresa)
+                .populate('cliente_id')  
+                .populate('empresa_id');
         } catch (error) {
             throw new Error('Factura no encontrada');
         }
