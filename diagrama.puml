@@ -1,0 +1,38 @@
+@startuml diagrama
+class FacturaController {
+        +crearFactura(req, res)
+        +obtenerFacturas(req, res)
+        +actualizarEstado(req, res)
+    }
+
+class FacturaFactory {
+        <<Factory>>
+        +static crearFactura(datos) : Object
+    }
+
+class FacturaDAO {
+        <<DAO>>
+        +crear(datos)
+        +buscarPorId(id)
+        +listarPorEmpresa(id)
+        +actualizarEstado(id, estado)
+    }
+
+class FacturaModel {
+        <<Mongoose Schema>>
+        +_id : ObjectId
+        +numero : String
+        +total : Number
+        +items : Array
+        +estado : String
+    }
+
+class ClienteDAO {
+        <<DAO>>
+        +buscarPorId(id)
+    }
+    FacturaController --> FacturaFactory : USA
+    FacturaController --> FacturaDAO : LLAMA
+    FacturaController --> ClienteDAO : LLAMA
+    FacturaDAO --> FacturaModel : GESTIONA
+@enduml

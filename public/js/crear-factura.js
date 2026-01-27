@@ -2,26 +2,33 @@ document.addEventListener('DOMContentLoaded', async () => {
     const empresaId = localStorage.getItem('empresaId');
     if (!empresaId) window.location.href = 'index.html';
 
-    // 1. Cargar Clientes en el Select
+    // CARGAR CLIENTES EN EL SELECT (CORREGIDO)
     const clienteSelect = document.getElementById('clienteSelect');
     try {
-        const res = await fetch(`/api/clientes/${empresaId}`);
+        // 👇👇 AQUÍ ESTÁ EL CAMBIO CLAVE: AÑADIMOS "/empresa/" 👇👇
+        const res = await fetch(`/api/clientes/empresa/${empresaId}`);
         const clientes = await res.json();
         
-        clientes.forEach(cliente => {
-            const option = document.createElement('option');
-            option.value = cliente._id; // El ID de Mongo
-            option.textContent = cliente.nombre;
-            clienteSelect.appendChild(option);
-        });
+        // Verificación de seguridad por si el servidor devuelve un error
+        if (Array.isArray(clientes)) {
+            clientes.forEach(cliente => {
+                const option = document.createElement('option');
+                option.value = cliente._id; // El ID de Mongo
+                option.textContent = cliente.nombre;
+                clienteSelect.appendChild(option);
+            });
+        } else {
+            console.error("La respuesta del servidor no es una lista de clientes:", clientes);
+        }
+
     } catch (error) {
-        console.error("Error cargando clientes");
+        console.error("Error cargando clientes:", error);
     }
-
     // Poner fechas por defecto
-    document.getElementById('fechaEmision').valueAsDate = new Date();
+    const fechaInput = document.getElementById('fechaEmision');
+    if(fechaInput) fechaInput.valueAsDate = new Date();
 
-    // 2. Lógica para Agregar Filas de Productos
+    //  LÓGICA DE FILAS Y PRODUCTOS
     const itemsContainer = document.getElementById('itemsContainer');
     const btnAgregar = document.getElementById('btnAgregarItem');
 
@@ -50,11 +57,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Agregar la primera fila al iniciar
     agregarFila();
-
     // Evento botón agregar
-    btnAgregar.addEventListener('click', agregarFila);
+    if(btnAgregar) btnAgregar.addEventListener('click', agregarFila);
 
-    // 3. Función Matemática (Calcula Totales)
+    //  FUNCIÓN MATEMÁTICA 
     function calcularTotales() {
         let subtotalTotal = 0;
         const filas = document.querySelectorAll('#itemsContainer tr');
@@ -68,63 +74,73 @@ document.addEventListener('DOMContentLoaded', async () => {
             fila.querySelector('.subtotal-fila').textContent = subtotal.toFixed(2) + ' €';
             subtotalTotal += subtotal;
         });
-
         const iva = subtotalTotal * 0.21;
         const total = subtotalTotal + iva;
-
         // Pintar totales generales
-        document.getElementById('displaySubtotal').textContent = subtotalTotal.toFixed(2) + ' €';
-        document.getElementById('displayIva').textContent = iva.toFixed(2) + ' €';
-        document.getElementById('displayTotal').textContent = total.toFixed(2) + ' €';
+        const displaySub = document.getElementById('displaySubtotal');
+        const displayIva = document.getElementById('displayIva');
+        const displayTot = document.getElementById('displayTotal');
+
+        if(displaySub) displaySub.textContent = subtotalTotal.toFixed(2) + ' €';
+        if(displayIva) displayIva.textContent = iva.toFixed(2) + ' €';
+        if(displayTot) displayTot.textContent = total.toFixed(2) + ' €';
     }
 
     // 4. ENVIAR FORMULARIO (Crear Factura)
-    document.getElementById('facturaForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
 
-        // Recopilar datos de las filas
-        const items = [];
-        document.querySelectorAll('#itemsContainer tr').forEach(fila => {
-            items.push({
-                concepto: fila.querySelector('.desc').value,
-                cantidad: parseFloat(fila.querySelector('.cant').value),
-                precio_unitario: parseFloat(fila.querySelector('.precio').value)
+    const formFactura = document.getElementById('facturaForm');
+    if(formFactura) {
+        formFactura.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            // Recopilar datos de las filas
+            const items = [];
+            document.querySelectorAll('#itemsContainer tr').forEach(fila => {
+                items.push({
+                    concepto: fila.querySelector('.desc').value,
+                    descripcion: fila.querySelector('.desc').value, 
+                    cantidad: parseFloat(fila.querySelector('.cant').value),
+                    precio_unitario: parseFloat(fila.querySelector('.precio').value)
+                });
             });
-        });
-
-        const nuevaFactura = {
-                empresa_id: empresaId,
-                cliente_id: clienteSelect.value,
-                numero: document.getElementById('numeroFactura').value,
-                fecha_emision: document.getElementById('fechaEmision').value,
-                fecha_vencimiento: document.getElementById('fechaVencimiento').value,
-                estado: document.getElementById('estadoFactura').value, 
-                items: items,
-                notas: document.getElementById('notas').value
+            const nuevaFactura = {
+                    empresa_id: empresaId,
+                    cliente_id: clienteSelect.value,
+                    numero: document.getElementById('numeroFactura').value,
+                    fecha_emision: document.getElementById('fechaEmision').value,
+                    fecha_vencimiento: document.getElementById('fechaVencimiento').value,
+                    estado: document.getElementById('estadoFactura').value, 
+                    items: items,
+                    notas: document.getElementById('notas').value
             };
 
-        try {
-            const res = await fetch('/api/facturas', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(nuevaFactura)
-            });
+            try {
+                const res = await fetch('/api/facturas', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(nuevaFactura)
+                });
 
-            const data = await res.json();
+                const data = await res.json();
 
-            if (res.ok) {
-                alert(`¡Éxito! Factura creada. \nPDF guardado en: ${data.ruta_pdf}`);
-                window.location.href = 'facturas.html'; // Redirigir a la lista
-            } else {
-                alert('Error: ' + data.error);
+                if (res.ok) {
+                    alert(`¡Éxito! Factura creada. \nPDF guardado.`);
+                    window.location.href = 'facturas.html'; // Redirigir a la lista
+                } else {
+                    alert('Error: ' + (data.error || 'Error desconocido'));
+                }
+            } catch (error) {
+                console.error(error);
+                alert('Error de conexión');
             }
-        } catch (error) {
-            alert('Error de conexión');
-        }
-    });
-            // 3. Botón Cerrar Sesión
-    document.getElementById('btnLogout').addEventListener('click', () => {
-        localStorage.removeItem('empresaId');
-        window.location.href = 'login.html';
-    });
+        });
+    }
+
+    // 3. Botón Cerrar Sesión
+    const btnLogout = document.getElementById('btnLogout');
+    if (btnLogout) {
+        btnLogout.addEventListener('click', () => {
+            localStorage.removeItem('empresaId');
+            window.location.href = 'login.html';
+        });
+    }
 });
