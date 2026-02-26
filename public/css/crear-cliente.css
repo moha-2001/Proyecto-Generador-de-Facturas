@@ -1,0 +1,149 @@
+/* --- ESTRUCTURA DE LA PÁGINA --- */
+body {
+    display: flex;
+    background-color: var(--gray-light);
+    min-height: 100vh;
+}
+
+.contenido {
+    flex: 1;
+    padding: 40px;
+    max-width: 1400px;
+    transition: all 0.3s ease;
+}
+
+/* --- CABECERA --- */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.page-header h1 {
+    font-size: 1.8rem;
+    color: var(--text-main);
+}
+
+/* Botón secundario (Cancelar) */
+.btn-secondary {
+    background: #e2e8f0;
+    color: #4a5568;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s;
+}
+
+.btn-secondary:hover {
+    background: #cbd5e0;
+}
+
+/* --- TARJETA DEL FORMULARIO --- */
+.card-form {
+    background: var(--white);
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    max-width: 800px; /* Ancho optimizado para formularios */
+    margin-top: 20px;
+}
+
+/* --- FILAS Y ENTRADAS --- */
+.form-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+}
+
+.input-group input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+/* --- ACCIONES DEL FORMULARIO --- */
+.form-actions {
+    margin-top: 30px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.btn-primary {
+    padding: 12px 25px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.3s;
+}
+
+.btn-primary:hover {
+    background: #5a52d5;
+}
+
+/* --- RESPONSIVE MÓVIL --- */
+@media (max-width: 768px) {
+    .contenido {
+        padding: 15px;
+        padding-bottom: 100px; /* Evita que el menú inferior tape el botón guardar */
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .form-row {
+        flex-direction: column; /* Apila Nombre y CIF en móviles */
+        gap: 15px;
+    }
+
+    .card-form {
+        padding: 1.5rem;
+    }
+
+    .btn-primary {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .btn-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+}

@@ -1,0 +1,164 @@
+/* --- ESTRUCTURA GENERAL --- */
+body {
+    display: flex;
+    background-color: var(--gray-light);
+    min-height: 100vh;
+}
+
+.main-contenido {
+    flex: 1;
+    padding: 40px;
+    max-width: 1400px;
+    box-sizing: border-box;
+}
+
+.page-header {
+    margin-bottom: 30px;
+}
+
+.page-header h1 {
+    font-size: 2rem;
+    color: var(--text-main);
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+/* --- TARJETAS DE PERFIL --- */
+.profile-section {
+    margin-bottom: 30px;
+}
+
+.card-profile {
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    max-width: 850px;
+    overflow: hidden;
+}
+
+.card-header {
+    padding: 20px 25px;
+    background: #fcfcfc;
+    border-bottom: 1px solid #eee;
+}
+
+.card-header h3 {
+    font-size: 1.15rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Colores de Borde Superior para secciones */
+.border-blue { border-top: 4px solid #4a90e2; }
+.border-red { border-top: 4px solid #e74c3c; }
+
+/* --- FORMULARIOS --- */
+.styled-form {
+    padding: 25px;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group.full-width {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    color: #555;
+}
+
+.input-group input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+    border-color: #4a90e2;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+/* --- BOTONES --- */
+.form-actions {
+    margin-top: 10px;
+}
+
+.btn-primary-blue {
+    background: #4a90e2;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.3s;
+}
+
+.btn-primary-blue:hover {
+    background: #357abd;
+}
+
+.btn-danger {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.3s;
+}
+
+.btn-danger:hover {
+    background: #c0392b;
+}
+
+/* --- RESPONSIVE MÓVIL --- */
+@media (max-width: 768px) {
+    .main-contenido {
+        padding: 20px 15px;
+        padding-bottom: 100px; /* Espacio para menú inferior */
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .btn-primary-blue, .btn-danger {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .page-header h1 {
+        font-size: 1.6rem;
+    }
+}

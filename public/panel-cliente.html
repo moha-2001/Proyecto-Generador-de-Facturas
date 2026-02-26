@@ -4,29 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Panel - Cliente | AutoFacturar</title>
-    <link rel="stylesheet" href="css/style-portalcliente.css">
+    <link rel="stylesheet" href="css/portalcliente.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/base.css">i
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
     <aside class="sidebar">
-        <header class="logo">
-            <h2>NexoDigital</h2>
-            <small class="area-tag">Área Clientes</small>
-        </header>
+        <div class="logo">
+            <h2>NexoDigital</h2> 
+        </div>
         <nav>
             <ul class="menu">
-                <li class="active">
-                    <a href="panel-cliente.html"><i class="fas fa-file-invoice-dollar"></i> Mis Facturas</a>
+                <li class="active"> <a href="panel-cliente.html"><i class="fas fa-file-invoice-dollar"></i> Mis Facturas</a>
                 </li>
                 <li>
                     <a href="perfil-cliente.html"><i class="fas fa-user-cog"></i> Mi Perfil</a>
                 </li>
             </ul>
         </nav>
-
-        <button id="btnLogout" class="btn-logout">
-            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-        </button>
+        <button id="btnLogout" class="btncerrar">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Salir</span>
+        </button>    
     </aside>
     <main class="main-content">
         <header class="main-header">
@@ -38,7 +38,7 @@
         <section class="content-body">
             <div class="card">
                 <header class="card-header">
-                    <h3><i class="fas fa-history"></i> Historial de Facturas</h3>
+                    <h3><i class="fas"></i> Historial de Facturas</h3>
                 </header>
                 <div class="table-responsive">
                     <table class="data-table">

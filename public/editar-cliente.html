@@ -5,34 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Cliente - AutoFacturar</title>
     <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/editar-cliente.css">
+    <link rel="stylesheet" href="css/sidebar.css">
     <link rel="stylesheet" href="css/forms.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="dashboard-body">
+<body>
     <aside class="sidebar">
         <div class="logo">
             <h2>NexoDigital</h2> 
         </div>
         <nav>
             <ul class="menu">
-                <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li> 
-                <li class="active"><a href="clientes.html"><i class="fas fa-users"></i> Clientes</a></li> 
+                <li class="active"><a href="dashboard.html"><i class="fas fa-home"></i> Panel</a></li> 
+                <li><a href="clientes.html"><i class="fas fa-users"></i> Clientes</a></li> 
                 <li><a href="facturas.html"><i class="fas fa-file-invoice"></i> Facturas</a></li> 
                 <li><a href="crear-factura.html"><i class="fas fa-plus-circle"></i> Nueva Factura</a></li>
                 <li><a href="perfil.html"><i class="fas fa-cog"></i> Perfil Empresa</a></li> 
             </ul>
         </nav>
-        <button id="btnLogout" class="btn-logout">Cerrar Sesión</button>
+        <button id="btnLogout" class="btncerrar">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Salir</span>
+        </button>    
     </aside>
-    <main class="main-content">
+    <main class="main-contenido">
         <header class="page-header">
             <h1>Editar Cliente</h1>
             <a href="clientes.html" class="btn-secondary">
                 <i class="fas fa-times"></i> Cancelar
             </a>
         </header>
-        <section class="form-container">
+        <section class="form-contenido">
             <div class="card card-form">
                 <form id="editarClienteForm">
                     <input type="hidden" id="clienteId" name="clienteId"> 

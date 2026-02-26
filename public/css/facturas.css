@@ -3,14 +3,15 @@ body {
     display: flex;
     background-color: var(--gray-light);
     min-height: 100vh;
-    padding-bottom: 0; 
+    overflow-x: hidden; /* EVITA EL SCROLL HORIZONTAL EN TODO EL CUERPO */
 }
 
 /* --- LAYOUT DEL CONTENIDO --- */
 .contenido {
     flex: 1;
     padding: 40px;
-    max-width: 1400px;
+    max-width: 100%; /* CAMBIO: Asegura que no se pase del ancho de pantalla */
+    box-sizing: border-box; /* Incluye el padding dentro del cálculo del ancho */
     transition: all 0.3s ease;
 }
 
@@ -36,19 +37,21 @@ body {
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.03);
     padding: 5px;
+    width: 100%; /* Asegura que la tarjeta use todo el espacio */
+    box-sizing: border-box;
 }
 
 .table-responsive {
-    overflow-x: auto; /* Scroll lateral para dispositivos móviles */
+    overflow-x: auto; /* El scroll debe quedar SOLO dentro de la tabla */
     -webkit-overflow-scrolling: touch;
+    width: 100%;
 }
 
 .data-table {
     width: 100%;
     border-collapse: collapse;
-    min-width: 850px; /* Evita que las columnas se amontonen */
+    min-width: 850px; /* Mantiene la tabla legible, el scroll será interno */
 }
-
 .data-table th {
     background: #f8f9fa;
     padding: 18px 15px;
@@ -70,6 +73,7 @@ body {
 }
 
 /* --- ETIQUETAS DE ESTADO (BADGES) --- */
+
 .status-badge {
     padding: 5px 12px;
     border-radius: 20px;
@@ -85,7 +89,6 @@ body {
     color: #065f46;
     border: 1px solid #a7f3d0;
 }
-
 .status-pendiente {
     background-color: #ffedd5;
     color: #9a3412;
@@ -93,6 +96,7 @@ body {
 }
 
 /* --- BOTONES DE ACCIÓN --- */
+
 .action-buttons {
     display: flex;
     gap: 8px;
@@ -120,6 +124,7 @@ body {
 .btn-delete { background-color: #ff4d4d; border: none; cursor: pointer; }
 
 /* --- BOTÓN NUEVA FACTURA (Estilo Dashboard) --- */
+
 .btn-action.purple {
     background: var(--primary-color);
     color: white;
@@ -132,21 +137,26 @@ body {
     gap: 10px;
     transition: 0.3s;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-}
 
+}
 .btn-action:hover {
     opacity: 0.9;
     transform: scale(1.02);
 }
-
 /* --- TEXTOS AUXILIARES --- */
+
 .text-center { text-align: center; }
 .italic { font-style: italic; color: var(--text-muted); }
-
-/* --- RESPONSIVE --- */
+/* --- RESPONSIVE CORREGIDO --- */
 @media (max-width: 768px) {
+    body {
+        flex-direction: column; /* Para que el contenido respete la sidebar móvil */
+    }
+
     .contenido {
-        padding: 20px;
+        padding: 20px 15px; /* Reducimos padding para ganar espacio en móvil */
+        width: 100%;
+        padding-bottom: 100px; /* Espacio para que el menú inferior no tape nada */
     }
 
     .page-header-actions {

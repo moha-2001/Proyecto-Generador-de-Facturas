@@ -4,30 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Perfil - Cliente | AutoFacturar</title>
-    <link rel="stylesheet" href="css/style-portalcliente.css">
+    <link rel="stylesheet" href="css/perfilcliente.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/base.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="client-portal-body">
+<body>
     <aside class="sidebar">
-        <header class="logo">
-            <h2>NexoDigital</h2>
-            <small class="area-tag">Área Clientes</small>
-        </header>
+        <div class="logo">
+            <h2>NexoDigital</h2> 
+        </div>
         <nav>
             <ul class="menu">
                 <li>
                     <a href="panel-cliente.html"><i class="fas fa-file-invoice-dollar"></i> Mis Facturas</a>
                 </li>
-                <li class="active">
-                    <a href="perfil-cliente.html"><i class="fas fa-user-cog"></i> Mi Perfil</a>
+                <li class="active"> <a href="perfil-cliente.html"><i class="fas fa-user-cog"></i> Mi Perfil</a>
                 </li>
             </ul>
         </nav>
-        <button id="btnLogout" class="btn-logout">
-            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-        </button>
+        <button id="btnLogout" class="btncerrar">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Salir</span>
+        </button>    
     </aside>
-    <main class="main-content">
+    <main class="main-contenido">
         <header class="page-header">
             <h1>Mi Perfil</h1>
             <p class="subtitle">Gestiona tus datos personales y seguridad</p>
@@ -35,7 +36,7 @@
         <section class="profile-section">
             <div class="card card-profile">
                 <header class="card-header border-blue">
-                    <h3><i class="fas fa-id-card"></i> Mis Datos</h3>
+                    <h3><i class="fas "></i> Mis Datos</h3>
                 </header>  
                 <form id="formDatos" class="styled-form">
                     <div class="form-row">
@@ -70,10 +71,10 @@
                 </form>
             </div>
         </section>
-        <section class="profile-section security-margin">
+        <section class="profile-section seguridad">
             <div class="card card-profile">
                 <header class="card-header border-red">
-                    <h3><i class="fas fa-shield-alt"></i> Seguridad</h3>
+                    <h3><i class="fas "></i> Seguridad</h3>
                 </header>
                 <form id="formPassword" class="styled-form">
                     <div class="input-group full-width">
