@@ -46,10 +46,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify(nuevoCliente)
             });
 
-            console.log("📡 Respuesta del servidor (Status):", res.status);
+            console.log(" Respuesta del servidor (Status):", res.status);
 
             const data = await res.json();
-            console.log("📄 Datos devueltos por servidor:", data);
+            console.log(" Datos devueltos por servidor:", data);
 
             if (res.ok) {
                 alert("Cliente creado con éxito.\nContraseña: " + cifNifValue);

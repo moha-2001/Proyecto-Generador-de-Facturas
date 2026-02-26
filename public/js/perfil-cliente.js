@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     //  VERIFICAR SESIÓN
     const clienteId = localStorage.getItem('clienteId');
     if (!clienteId) {
-        window.location.href = 'login.html';
+        window.location.href = 'index.html';
         return;
     }
 
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         btnLogout.addEventListener('click', () => {
             if(confirm("¿Seguro que quieres cerrar sesión?")) {
                 localStorage.clear();
-                window.location.href = 'login.html';
+                window.location.href = 'index.html';
             }
         });
     }
@@ -49,9 +49,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         const datosParaEnviar = {
             nombre:    document.getElementById('nombreCli').value,
             email:     document.getElementById('emailCli').value,
-            cif_nif:   document.getElementById('cifCli').value,   // Enviamos 'cif_nif'
-            telefono:  document.getElementById('telCli').value,   // Enviamos 'telefono'
-            direccion: document.getElementById('dirCli').value    // Enviamos 'direccion'
+            cif_nif:   document.getElementById('cifCli').value,   
+            telefono:  document.getElementById('telCli').value,   
+            direccion: document.getElementById('dirCli').value    
         };
 
         try {
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (res.ok) {
                 alert("Contraseña cambiada. Por seguridad, inicia sesión de nuevo.");
                 localStorage.clear();
-                window.location.href = 'login.html';
+                window.location.href = 'index.html';
             } else {
                 alert("Error: " + (resultado.error || "No se pudo cambiar la contraseña"));
             }

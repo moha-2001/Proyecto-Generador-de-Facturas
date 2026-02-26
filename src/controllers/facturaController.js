@@ -12,22 +12,16 @@ class FacturaController {
         try {
             // PATRÓN FACTORY: Delegamos los cálculos matemáticos
             const datosFactura = FacturaFactory.crearFactura(req.body);
-
             // PATRÓN DAO: Guardamos
             const facturaGuardada = await FacturaDAO.crear(datosFactura);
-
             // DAO: Recuperamos datos completos (populates)
             const facturaCompleta = await FacturaDAO.buscarPorId(facturaGuardada._id);
-
             // --- Generación de PDF (Lógica de servicio/controlador) ---
             const directorio = path.join(__dirname, '../../facturas');
             if (!fs.existsSync(directorio)) fs.mkdirSync(directorio);
-            
             const nombreArchivo = `factura-${facturaCompleta.numero}.pdf`;
             const rutaCompleta = path.join(directorio, nombreArchivo);
-
             construirPDF(facturaCompleta, rutaCompleta);
-
             // Envío de correo asíncrono
             setTimeout(async () => {
                 if (facturaCompleta.cliente_id?.email) {
@@ -40,7 +34,6 @@ class FacturaController {
                     );
                 }
             }, 1500);
-
             // Crear notificación (Usando DAO)
             await NotificacionDAO.crear({
                 empresa_id: facturaGuardada.empresa_id,

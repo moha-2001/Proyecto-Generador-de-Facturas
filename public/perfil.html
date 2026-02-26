@@ -2,94 +2,107 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configuración - AutoFacturar</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/perfil-empresa.css">
+    <link rel="stylesheet" href="css/sidebar.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="sidebar">
-        <div class="logo"><h2>NexoDigital</h2></div>
-        <ul class="menu">
-            <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
-            <li><a href="clientes.html"><i class="fas fa-users"></i> Clientes</a></li>
-            <li><a href="facturas.html"><i class="fas fa-file-invoice"></i> Facturas</a></li>
-            <li><a href="crear-factura.html"><i class="fas fa-plus-circle"></i> Nueva Factura</a></li>
-            <li class="active"><a href="perfil.html"><i class="fas fa-cog"></i> Perfil Empresa</a></li>
-        </ul>
-        <button id="btnLogout" class="btn-logout">Cerrar Sesión</button>
-    </div>
-
-    <div class="main-content">
-        <header><h1>Configuración de Mi Empresa</h1></header>
-
-        <div class="card" style="max-width: 800px; margin-top: 20px;">
-            <form id="perfilForm">
-                <h3 style="color:var(--primary-color); font-size:1.1rem; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
-                    <i class="fas fa-info-circle"></i> Información Básica
-                </h3>
-                
-                <div class="form-row">
-                    <div class="input-group">
-                        <label>Nombre / Razón Social</label>
-                        <input type="text" id="nombreEmp" required>
-                    </div>
-                    <div class="input-group">
-                        <label>Email</label>
-                        <input type="email" id="emailEmp" required>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="input-group">
-                        <label>CIF / NIF</label>
-                        <input type="text" id="cifEmp" required>
-                    </div>
-                    <div class="input-group">
-                        <label>Teléfono</label>
-                        <input type="tel" id="telEmp">
-                    </div>
-                </div>
-
-                <div class="input-group">
-                    <label>Dirección</label>
-                    <input type="text" id="dirEmp">
-                </div>
-
-                <button type="submit" class="btn-primary" style="margin-top: 20px;">
-                    <i class="fas fa-save"></i> Guardar Datos
-                </button>
-            </form>
+    <aside class="sidebar">
+        <div class="logo">
+            <h2>NexoDigital</h2> 
         </div>
-
-        <div class="card" style="max-width: 800px; margin-top: 30px; margin-bottom: 50px;">
-            <form id="passwordForm">
-                <h3 style="color:#e74c3c; font-size:1.1rem; margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
-                    <i class="fas fa-lock"></i> Seguridad
-                </h3>
-
-                <div class="input-group">
-                    <label>Contraseña Actual</label>
-                    <input type="password" id="passActual" required placeholder="Tu contraseña actual">
-                </div>
-
-                <div class="form-row">
-                    <div class="input-group">
-                        <label>Nueva Contraseña</label>
-                        <input type="password" id="passNueva" required minlength="6">
+        <nav>
+            <ul class="menu">
+                <li class="active"><a href="dashboard.html"><i class="fas fa-home"></i> Panel</a></li> 
+                <li><a href="clientes.html"><i class="fas fa-users"></i> Clientes</a></li> 
+                <li><a href="facturas.html"><i class="fas fa-file-invoice"></i> Facturas</a></li> 
+                <li><a href="crear-factura.html"><i class="fas fa-plus-circle"></i> Nueva Factura</a></li>
+                <li><a href="perfil.html"><i class="fas fa-cog"></i> Perfil Empresa</a></li> 
+            </ul>
+        </nav>
+        <button id="btnLogout" class="btncerrar">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Salir</span>
+        </button>    
+    </aside>
+    <main class="contenido">
+        <header class="page-header">
+            <h1>Configuración de Mi Empresa</h1>
+        </header>
+        <section class="form-contenido">
+            <div class="card card-form">
+                <form id="perfilForm">
+                    <header class="form-section-header">
+                        <h3 class="text-primary">
+                            <i class="fas fa-building"></i> Información Básica
+                        </h3>
+                    </header>
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="nombreEmp">Nombre / Razón Social</label>
+                            <input type="text" id="nombreEmp" name="nombreEmp" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="emailEmp">Email</label>
+                            <input type="email" id="emailEmp" name="emailEmp" required>
+                        </div>
                     </div>
-                    <div class="input-group">
-                        <label>Confirmar Nueva</label>
-                        <input type="password" id="passConfirm" required>
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="cifEmp">CIF / NIF</label>
+                            <input type="text" id="cifEmp" name="cifEmp" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="telEmp">Teléfono</label>
+                            <input type="tel" id="telEmp" name="telEmp">
+                        </div>
                     </div>
-                </div>
-
-                <button type="submit" class="btn-primary" style="margin-top: 20px; background-color: #e74c3c;">
-                    <i class="fas fa-key"></i> Actualizar Contraseña
-                </button>
-            </form>
-        </div>
-
-    </div>
+                    <div class="input-group full-width">
+                        <label for="dirEmp">Dirección</label>
+                        <input type="text" id="dirEmp" name="dirEmp">
+                    </div>
+                    <footer class="form-actions">
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-save"></i> Guardar Datos
+                        </button>
+                    </footer>
+                </form>
+            </div>
+        </section>
+        <section class="form-container security-section">
+            <div class="card card-form">
+                <form id="passwordForm">
+                    <header class="form-section-header">
+                        <h3 class="text-danger">
+                            <i class="fas fa-user-shield"></i> Seguridad
+                        </h3>
+                    </header>
+                    <div class="input-group full-width">
+                        <label for="passActual">Contraseña Actual</label>
+                        <input type="password" id="passActual" name="passActual" required placeholder="Tu contraseña actual">
+                    </div>
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="passNueva">Nueva Contraseña</label>
+                            <input type="password" id="passNueva" name="passNueva" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="passConfirm">Confirmar Nueva</label>
+                            <input type="password" id="passConfirm" name="passConfirm" required>
+                        </div>
+                    </div>
+                    <footer class="form-actions">
+                        <button type="submit" class="btn-primary btn-danger">
+                            <i class="fas fa-key"></i> Actualizar Contraseña
+                        </button>
+                    </footer>
+                </form>
+            </div>
+        </section>
+    </main>
     <script src="js/perfil.js"></script>
 </body>
 </html>

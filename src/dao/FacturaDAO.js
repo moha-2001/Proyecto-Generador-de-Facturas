@@ -12,18 +12,18 @@ class FacturaDAO {
 
     async listarPorEmpresa(empresaId) {
         return await Factura.find({ empresa_id: empresaId })
-                            .populate('cliente_id', 'nombre email cif_nif');
+        .populate('cliente_id', 'nombre email cif_nif');
     }
 
     async listarPorCliente(clienteId) {
         return await Factura.find({ cliente_id: clienteId })
-                            .populate('empresa_id', 'nombre');
+        .populate('empresa_id', 'nombre');
     }
 
     async buscarPorId(id) {
         return await Factura.findById(id)
-            .populate('cliente_id')
-            .populate('empresa_id');
+        .populate('cliente_id')
+        .populate('empresa_id');
     }
     
     async actualizarEstado(id, nuevoEstado) {

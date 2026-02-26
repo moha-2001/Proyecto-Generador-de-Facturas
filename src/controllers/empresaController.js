@@ -3,6 +3,18 @@ const bcrypt = require('bcryptjs');
 
 const registrarEmpresa = async (req, res) => {
     try {
+        const { password } = req.body;
+
+        //  VALIDACIÓN DE SEGURIDAD AL REGISTRAR
+        if (password) {
+            const passwordRegex = /^[A-Z](?=.*\d)(?=.*[\W_]).{7,}$/;
+            if (!passwordRegex.test(password)) {
+                return res.status(400).json({ 
+                    error: 'La contraseña debe tener mínimo 8 caracteres, EMPEZAR por mayúscula, y contener un número y un carácter especial.' 
+                });
+            }
+        }
+
         // Guardamos la empresa usando el DAO
         const empresa = await EmpresaDAO.crear(req.body);
         res.status(201).json({
@@ -13,6 +25,7 @@ const registrarEmpresa = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
 const loginEmpresa = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -40,6 +53,7 @@ const loginEmpresa = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 };
+
 const obtenerEmpresa = async (req, res) => {
     try {
         const empresa = await EmpresaDAO.buscarPorId(req.params.id);
@@ -62,6 +76,14 @@ const cambiarPassword = async (req, res) => {
     try {
         const { id } = req.params;
         const { passwordActual, passwordNueva } = req.body;
+
+        //  VALIDACIÓN DE SEGURIDAD AL CAMBIAR CONTRASEÑA
+        const passwordRegex = /^[A-Z](?=.*\d)(?=.*[\W_]).{7,}$/;
+        if (!passwordRegex.test(passwordNueva)) {
+            return res.status(400).json({ 
+                error: 'La nueva contraseña debe tener mínimo 8 caracteres, EMPEZAR por mayúscula, y contener un número y un carácter especial.' 
+            });
+        }
 
         const Empresa = require('../models/Empresa');
         const empresa = await Empresa.findById(id);
@@ -93,4 +115,4 @@ const cambiarPassword = async (req, res) => {
     }
 };
 
-module.exports = { registrarEmpresa, loginEmpresa, obtenerEmpresa, actualizarEmpresa,cambiarPassword };
+module.exports = { registrarEmpresa, loginEmpresa, obtenerEmpresa, actualizarEmpresa, cambiarPassword };

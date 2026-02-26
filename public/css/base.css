@@ -1,0 +1,48 @@
+/* Variables Globales - Manteniendo tus colores originales */
+:root {
+    --primary-color: #6c63ff;
+    --primary-hover: #5a52d5;
+    --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --white: #ffffff;
+    --gray-light: #f4f6f9;
+    --text-main: #333;
+    --text-muted: #666;
+    --error: #ff4d4d;
+    --shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* Reset Básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-main);
+    line-height: 1.6;
+    background-color: var(--gray-light);
+}
+
+/* Clases Utilitarias */
+.text-center { text-align: center; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+
+/* Botón Primary (el morado que ya tenías) */
+.btn-primary {
+    width: 100%;
+    padding: 12px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+}

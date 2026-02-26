@@ -4,46 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis Facturas - AutoFacturar</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/facturas.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/reset.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="sidebar">
-        <div class="logo"><h2>NexoDigital</h2></div>
-        <ul class="menu">
-            <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
-            <li><a href="clientes.html"><i class="fas fa-users"></i> Clientes</a></li>
-            <li class="active"><a href="facturas.html"><i class="fas fa-file-invoice"></i> Facturas</a></li>
-            <li><a href="crear-factura.html"><i class="fas fa-plus-circle"></i> Nueva Factura</a></li>
-            <li><a href="perfil.html"><i class="fas fa-cog"></i> Perfil Empresa</a></li>
-        </ul>
-        <button id="btnLogout" class="btn-logout">Cerrar Sesión</button>
-    </div>
-
-    <div class="main-content">
+    <aside class="sidebar">
+        <div class="logo">
+            <h2>NexoDigital</h2> 
+        </div>
+        <nav>
+            <ul class="menu">
+                <li class="active"><a href="dashboard.html"><i class="fas fa-home"></i> Panel</a></li> 
+                <li><a href="clientes.html"><i class="fas fa-users"></i> Clientes</a></li> 
+                <li><a href="facturas.html"><i class="fas fa-file-invoice"></i> Facturas</a></li> 
+                <li><a href="crear-factura.html"><i class="fas fa-plus-circle"></i> Nueva Factura</a></li>
+                <li><a href="perfil.html"><i class="fas fa-cog"></i> Perfil Empresa</a></li> 
+            </ul>
+        </nav>
+        <button id="btnLogout" class="btncerrar">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Salir</span>
+        </button>    
+    </aside>
+    <main class="contenido">
         <header class="page-header-actions">
             <h1>Mis Facturas</h1>
-            <a href="crear-factura.html" class="btn-action purple">
-                <i class="fas fa-plus"></i> Nueva Factura
-            </a>
+            <div class="header-tools">
+                <a href="crear-factura.html" class="btn-action purple">
+                    <i class="fas fa-plus"></i> Nueva Factura
+                </a>
+            </div>
         </header>
-
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th>Número</th>
-                    <th>Cliente</th>
-                    <th>Fecha Emisión</th>
-                    <th>Total</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody id="facturasTableBody">
-                <tr><td colspan="6" style="text-align: center;">Cargando...</td></tr>
-            </tbody>
-        </table>
-    </div>
+        <section class="table-contenido">
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Número</th>
+                            <th>Cliente</th>
+                            <th>Fecha Emisión</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="facturasTableBody">
+                        <tr>
+                            <td colspan="6" class="text-center italic">Cargando facturas...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
     <script src="js/facturas.js"></script>
 </body>
 </html>

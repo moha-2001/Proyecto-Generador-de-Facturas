@@ -14,9 +14,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         console.log("Cargando datos del cliente ID:", clienteId);
 
-        // ✅ USAMOS LA RUTA CORRECTA "/detalle/"
-        const res = await fetch(`/api/clientes/detalle/${clienteId}`);
-        
+        //  USAMOS LA RUTA CORRECTA "/detalle/"
+        const res = await fetch(`/api/clientes/${clienteId}`);        
         if (!res.ok) {
             throw new Error("Error al obtener datos del servidor");
         }
@@ -63,7 +62,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
 
             if (res.ok) {
-                alert("✅ Cliente actualizado correctamente");
+                alert("Cliente actualizado correctamente");
                 window.location.href = 'clientes.html'; // Volver a la lista
             } else {
                 const errorData = await res.json();

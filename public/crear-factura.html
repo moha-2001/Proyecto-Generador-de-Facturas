@@ -4,104 +4,120 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nueva Factura - AutoFacturar</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/crear-factura.css">
+    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="css/facturas.css"> <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-    
-    <div class="sidebar">
-        <div class="logo"><h2>NexoDigital</h2></div>
-        <ul class="menu">
-            <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
-            <li><a href="clientes.html"><i class="fas fa-users"></i> Clientes</a></li>
-            <li><a href="facturas.html"><i class="fas fa-file-invoice"></i> Facturas</a></li>
-            <li class="active"><a href="crear-factura.html"><i class="fas fa-plus-circle"></i> Nueva Factura</a></li>
-            <li><a href="perfil.html"><i class="fas fa-cog"></i> Perfil Empresa</a></li>
-        </ul>
-        <button id="btnLogout" class="btn-logout">Cerrar Sesión</button>
-    </div>
-
-    <div class="main-content">
-        <header>
-            <h1>Crear Nueva Factura</h1>
-            <a href="dashboard.html" class="btn-action" style="background:#666;">Cancelar</a>
-        </header>
-
-        <div class="card" style="max-width: 100%; margin-top: 20px;">
-            <form id="facturaForm">
-                <div class="form-row">
-                    <div class="input-group">
-                        <label>Cliente *</label>
-                        <select id="clienteSelect" required>
-                            <option value="">Seleccione un cliente...</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label>Número de Factura *</label>
-                        <input type="text" id="numeroFactura" placeholder="Ej: FAC-2025-001" required>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="input-group">
-                        <label>Fecha Emisión</label>
-                        <input type="date" id="fechaEmision" required>
-                    </div>
-                    <div class="input-group">
-                        <label>Fecha Vencimiento</label>
-                        <input type="date" id="fechaVencimiento">
-                    </div>
-                    <div class="input-group">
-                        <label>Estado Inicial</label>
-                        <select id="estadoFactura">
-                            <option value="Pendiente">Pendiente</option>
-                            <option value="Pagada">Pagada</option>
-                        </select>
-                    </div>
-                </div>
-                <h3 style="margin-top: 30px; border-bottom: 1px solid #eee; padding-bottom: 10px;">Ítems de la Factura</h3>
-                <table class="items-table">
-                    <thead>
-                        <tr>
-                            <th width="50%">Descripción</th>
-                            <th width="15%">Cantidad</th>
-                            <th width="15%">Precio (€)</th>
-                            <th width="15%">Subtotal</th>
-                            <th width="5%"></th>
-                        </tr>
-                    </thead>
-                    <tbody id="itemsContainer">
-                        </tbody>
-                </table>
-
-                <button type="button" id="btnAgregarItem" class="btn-secondary">+ Agregar Línea</button>
-
-                <div class="totales-container">
-                    <div class="total-row">
-                        <span>Subtotal:</span>
-                        <span id="displaySubtotal">0.00 €</span>
-                    </div>
-                    <div class="total-row">
-                        <span>IVA (21%):</span>
-                        <span id="displayIva">0.00 €</span>
-                    </div>
-                    <div class="total-row grand-total">
-                        <span>TOTAL:</span>
-                        <span id="displayTotal">0.00 €</span>
-                    </div>
-                </div>
-
-                <div class="form-footer">
-                    <label>Notas / Método de Pago</label>
-                    <textarea id="notas" rows="3" placeholder="Ej: Transferencia al IBAN ES99..."></textarea>
-                    
-                    <button type="submit" class="btn-primary" style="margin-top: 20px;">
-                        <i class="fas fa-paper-plane"></i> Crear y Generar PDF
-                    </button>
-                </div>
-            </form>
+    <aside class="sidebar">
+        <div class="logo">
+            <h2>NexoDigital</h2> 
         </div>
-    </div>
+        <nav>
+            <ul class="menu">
+                <li class="active"><a href="dashboard.html"><i class="fas fa-home"></i> Panel</a></li> 
+                <li><a href="clientes.html"><i class="fas fa-users"></i> Clientes</a></li> 
+                <li><a href="facturas.html"><i class="fas fa-file-invoice"></i> Facturas</a></li> 
+                <li><a href="crear-factura.html"><i class="fas fa-plus-circle"></i> Nueva Factura</a></li>
+                <li><a href="perfil.html"><i class="fas fa-cog"></i> Perfil Empresa</a></li> 
+            </ul>
+        </nav>
+        <button id="btnLogout" class="btncerrar">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Salir</span>
+        </button>    
+    </aside>
+    <main class="contenido">
+        <header class="page-header">
+            <h1>Crear Nueva Factura</h1>
+            <a href="dashboard.html" class="btn-secondary">Cancelar</a>
+        </header>
+        <section class="invoice-contenido">
+            <div class="card card-wide">
+                <form id="facturaForm">
+                    <fieldset class="form-section">
+                        <legend class="sr-only">Datos generales de la factura</legend>
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="clienteSelect">Cliente *</label>
+                                <select id="clienteSelect" name="clienteSelect" required>
+                                    <option value="">Seleccione un cliente...</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="numeroFactura">Número de Factura *</label>
+                                <input type="text" id="numeroFactura" name="numeroFactura" placeholder="Ej: FAC-2025-001" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="input-group">
+                                <label for="fechaEmision">Fecha Emisión</label>
+                                <input type="date" id="fechaEmision" name="fechaEmision" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="fechaVencimiento">Fecha Vencimiento</label>
+                                <input type="date" id="fechaVencimiento" name="fechaVencimiento">
+                            </div>
+                            <div class="input-group">
+                                <label for="estadoFactura">Estado Inicial</label>
+                                <select id="estadoFactura" name="estadoFactura">
+                                    <option value="Pendiente">Pendiente</option>
+                                    <option value="Pagada">Pagada</option>
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <section class="items-section">
+                        <h3>Ítems de la Factura</h3>
+                        <div class="table-responsive">
+                            <table class="items-table">
+                                <thead>
+                                    <tr>
+                                        <th class="col-desc">Descripción</th>
+                                        <th class="col-qty">Cantidad</th>
+                                        <th class="col-price">Precio (€)</th>
+                                        <th class="col-sub">Subtotal</th>
+                                        <th class="col-action"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="itemsContainer">
+                                </tbody>
+                            </table>
+                        </div>
+                        <button type="button" id="btnAgregarItem" class="btn-add-line">
+                            <i class="fas fa-plus"></i> Agregar Línea
+                        </button>
+                    </section>
+                    <footer class="invoice-footer">
+                        <div class="notes-area">
+                            <label for="notas">Notas / Método de Pago</label>
+                            <textarea id="notas" name="notas" rows="3" placeholder="Ej: Transferencia al IBAN ES99..."></textarea>
+                        </div>
+                        <div class="totals-area">
+                            <div class="totales-container">
+                                <div class="total-row">
+                                    <span>Subtotal:</span>
+                                    <span id="displaySubtotal">0.00 €</span>
+                                </div>
+                                <div class="total-row">
+                                    <span>IVA (21%):</span>
+                                    <span id="displayIva">0.00 €</span>
+                                </div>
+                                <div class="total-row grand-total">
+                                    <span>TOTAL:</span>
+                                    <span id="displayTotal" class="price-big">0.00 €</span>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-primary btn-submit-invoice">
+                                <i class="fas fa-paper-plane"></i> Crear y Generar PDF
+                            </button>
+                        </div>
+                    </footer>
+                </form>
+            </div>
+        </section>
+    </main>
     <script src="js/crear-factura.js"></script>
 </body>
 </html>

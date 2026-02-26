@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (btnLogout) {
         btnLogout.addEventListener('click', () => {
             localStorage.removeItem('empresaId');
-            window.location.href = 'login.html';
+            window.location.href = 'index.html';
         });
     }
 
@@ -101,7 +101,7 @@ window.cambiarEstado = async (facturaId, selectElement) => {
 // NUEVA FUNCIÓN: ELIMINAR FACTURA
 window.eliminarFactura = async (id) => {
     // 1. Preguntar confirmación
-    if (!confirm("⚠️ ¿Estás seguro de que quieres eliminar esta factura permanentemente?")) {
+    if (!confirm("¿Estás seguro de que quieres eliminar esta factura permanentemente?")) {
         return;
     }
 

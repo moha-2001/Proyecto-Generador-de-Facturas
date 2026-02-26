@@ -1,0 +1,132 @@
+/* --- ESTRUCTURA GENERAL (LAYOUT) --- */
+body {
+    display: flex;
+    background-color: var(--gray-light);
+    min-height: 100vh;
+}
+
+/* --- CONTENIDO PRINCIPAL --- */
+.contenido {
+    flex: 1;
+    padding: 40px;
+    max-width: 1400px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.header-tools {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+/* --- BUSCADOR --- */
+.search-bar {
+    display: flex;
+    align-items: center;
+    background: var(--white);
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    width: 300px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.search-bar i {
+    color: var(--text-muted);
+    margin-right: 10px;
+}
+
+.search-bar input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 0.9rem;
+    background: transparent;
+    color: var(--text-main);
+}
+
+/* --- TABLA DE CLIENTES --- */
+.tabla-contenido {
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    overflow-x: auto; /* Permite scroll lateral en móvil */
+    padding: 5px;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 750px;
+}
+
+.data-table th {
+    background: #f8f9fa;
+    padding: 18px 15px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-bottom: 2px solid #eee;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.data-table td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    color: var(--text-main);
+    font-size: 0.95rem;
+    vertical-align: middle;
+}
+
+.text-center {
+    text-align: center;
+    padding: 30px !important;
+}
+
+/* --- BOTÓN ACCIÓN --- */
+.btn-action.purple {
+    background: var(--primary-color);
+    color: white;
+    padding: 14px 25px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.3s;
+}
+
+.btn-action:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+}
+
+/* --- RESPONSIVE MÓVIL (MENÚ ABAJO) --- */
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+        padding-bottom: 80px; /* Espacio para el menú inferior */
+    }
+    .contenido { padding: 20px; }
+
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .header-tools, .search-bar, .btn-action {
+        width: 100%;
+    }
+}

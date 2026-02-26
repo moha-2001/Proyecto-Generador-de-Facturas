@@ -2,96 +2,92 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Mi Panel - Cliente</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Panel - Cliente | AutoFacturar</title>
     <link rel="stylesheet" href="css/style-portalcliente.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-
-    <div class="sidebar">
-        <div class="logo">
+    <aside class="sidebar">
+        <header class="logo">
             <h2>NexoDigital</h2>
-            <small style="display:block; margin-top:5px; color:#999;">Área Clientes</small>
-        </div>
-        
-        <ul class="menu">
-            <li class="active">
-                <a href="panel-cliente.html"><i class="fas fa-file-invoice-dollar"></i> Mis Facturas</a>
-            </li>
-            <li>
-                <a href="perfil-cliente.html"><i class="fas fa-user-cog"></i> Mi Perfil</a>
-            </li>
-        </ul>
+            <small class="area-tag">Área Clientes</small>
+        </header>
+        <nav>
+            <ul class="menu">
+                <li class="active">
+                    <a href="panel-cliente.html"><i class="fas fa-file-invoice-dollar"></i> Mis Facturas</a>
+                </li>
+                <li>
+                    <a href="perfil-cliente.html"><i class="fas fa-user-cog"></i> Mi Perfil</a>
+                </li>
+            </ul>
+        </nav>
 
         <button id="btnLogout" class="btn-logout">
             <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
         </button>
-    </div>
-
-    <div class="main-content">
-        <header>
-            <div>
-                <h1>Hola, <span id="nombreCliente" style="color:var(--primary-color);">Cliente</span></h1>
+    </aside>
+    <main class="main-content">
+        <header class="main-header">
+            <div class="welcome-text">
+                <h1>Hola, <span id="nombreCliente" class="text-primary">Cliente</span></h1>
                 <p class="subtitle">Bienvenido a tu espacio privado</p>
             </div>
-
         </header>
-
-        <div class="card">
-            <div style="margin-bottom:20px;">
-                <h3><i class="fas fa-history"></i> Historial de Facturas</h3>
+        <section class="content-body">
+            <div class="card">
+                <header class="card-header">
+                    <h3><i class="fas fa-history"></i> Historial de Facturas</h3>
+                </header>
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Empresa</th>
+                                <th>Nº Factura</th>
+                                <th>Fecha</th>
+                                <th>Total</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="facturasClienteTable">
+                            <tr>
+                                <td colspan="6" class="text-center loading-row">Cargando facturas...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Empresa</th>
-                        <th>Nº Factura</th>
-                        <th>Fecha</th>
-                        <th>Total</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="facturasClienteTable">
-                    <tr><td colspan="6" style="text-align:center; padding:20px;">Cargando facturas...</td></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+        </section>
+    </main>
 
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
-            
-            // 1. Cerrar Sesión
             const btnLogout = document.getElementById('btnLogout');
             if (btnLogout) {
                 btnLogout.addEventListener('click', () => {
                     if(confirm("¿Seguro que quieres salir?")) {
                         localStorage.clear();
-                        window.location.href = 'login.html';
+                        window.location.href = 'index.html';
                     }
                 });
             }
 
-            // 2. Verificar Login
             const clienteId = localStorage.getItem('clienteId');
             const nombre = localStorage.getItem('clienteNombre');
             
             if (!clienteId) {
-                window.location.href = 'login.html';
+                window.location.href = 'index.html';
                 return;
             }
-            
             const spanNombre = document.getElementById('nombreCliente');
             if (spanNombre) spanNombre.textContent = nombre || 'Cliente';
-
-            // 3. Cargar Facturas
-            const tbody = document.getElementById('facturasClienteTable');
-            
+            const tbody = document.getElementById('facturasClienteTable');     
             try {
+                // Simulación de fetch (mantén tu endpoint real)
                 const res = await fetch(`/api/facturas/mis-facturas/${clienteId}`);
-                if (!res.ok) throw new Error("Error API");
                 const facturas = await res.json();
                 
                 tbody.innerHTML = '';
@@ -99,48 +95,42 @@
                 if (facturas.length === 0) {
                     tbody.innerHTML = `
                         <tr>
-                            <td colspan="6" style="text-align:center; padding:30px; color:#888;">
-                                <i class="fas fa-folder-open" style="font-size:2rem; display:block; margin-bottom:10px;"></i>
-                                No hay facturas disponibles.
+                            <td colspan="6" class="empty-table-msg">
+                                <i class="fas fa-folder-open"></i>
+                                <p>No hay facturas disponibles.</p>
                             </td>
                         </tr>`;
                     return;
                 }
-
                 facturas.forEach(fac => {
-                    //  LÓGICA CSS: Asignamos clases en lugar de estilos inline
+                    // Usamos las clases definidas en style-portalcliente.css
                     const claseEstado = fac.estado === 'Pagada' ? 'status-pagada' : 'status-pendiente';
-                    const iconoEstado = fac.estado === 'Pagada' ? '<i class="fas fa-check"></i>' : '<i class="fas fa-clock"></i>';
-                    
-                    const nombreArchivo = `factura-${fac.numero}.pdf`;
-                    const nombreEmpresa = fac.empresa_id ? fac.empresa_id.nombre : 'Empresa desconocida';
-
                     tbody.innerHTML += `
                         <tr>
-                            <td><strong>${nombreEmpresa}</strong></td>
+                            <td><strong>${fac.empresa_id?.nombre || 'Empresa'}</strong></td>
                             <td>${fac.numero}</td>
                             <td>${new Date(fac.fecha_emision).toLocaleDateString()}</td>
-                            <td style="font-weight:bold;">${fac.total.toFixed(2)} €</td>
+                            <td class="text-bold">${fac.total.toFixed(2)} €</td>
                             <td>
                                 <span class="status-badge ${claseEstado}">
-                                    ${iconoEstado} ${fac.estado}
+                                    ${fac.estado}
                                 </span>
                             </td>
                             <td>
-                                <a href="/facturas/${nombreArchivo}" target="_blank" class="action-btn btn-view" title="Ver">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a href="/facturas/${nombreArchivo}" download class="action-btn btn-download" title="Descargar">
-                                    <i class="fas fa-download"></i>
-                                </a>
+                                <div class="action-buttons">
+                                    <a href="/facturas/factura-${fac.numero}.pdf" target="_blank" class="action-btn btn-view" title="Ver">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="/facturas/factura-${fac.numero}.pdf" download class="action-btn btn-download" title="Descargar">
+                                        <i class="fas fa-download"></i>
+                                    </a>
+                                </div>
                             </td>
                         </tr>
                     `;
                 });
-
             } catch (error) {
-                console.error(error);
-                tbody.innerHTML = '<tr><td colspan="6" style="color:red; text-align:center;">Error de conexión.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="6" class="text-error">Error al cargar datos.</td></tr>';
             }
         });
     </script>

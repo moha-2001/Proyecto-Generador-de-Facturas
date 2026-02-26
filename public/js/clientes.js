@@ -7,9 +7,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Función para cargar la tabla
     async function cargarClientes() {
         try {
-            // 👇👇 AQUÍ ESTÁ EL CAMBIO IMPORTANTE 👇👇
-            // Antes era: /api/clientes/${empresaId}
-            // AHORA ES:  /api/clientes/empresa/${empresaId}
+            //  AQUÍ ESTÁ EL CAMBIO IMPORTANTE 
             const res = await fetch(`/api/clientes/empresa/${empresaId}`);
             
             const clientes = await res.json();
@@ -89,7 +87,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (btnLogout) {
         btnLogout.addEventListener('click', () => {
             localStorage.removeItem('empresaId');
-            window.location.href = 'login.html';
+            window.location.href = 'index.html';
         });
     }
 });

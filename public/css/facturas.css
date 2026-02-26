@@ -1,0 +1,166 @@
+/* --- ESTRUCTURA GENERAL --- */
+body {
+    display: flex;
+    background-color: var(--gray-light);
+    min-height: 100vh;
+    padding-bottom: 0; 
+}
+
+/* --- LAYOUT DEL CONTENIDO --- */
+.contenido {
+    flex: 1;
+    padding: 40px;
+    max-width: 1400px;
+    transition: all 0.3s ease;
+}
+
+/* --- CABECERA DE ACCIONES --- */
+.page-header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.header-tools {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* --- TABLA DE DATOS (ESTILO CARD) --- */
+.table-contenido {
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    padding: 5px;
+}
+
+.table-responsive {
+    overflow-x: auto; /* Scroll lateral para dispositivos móviles */
+    -webkit-overflow-scrolling: touch;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 850px; /* Evita que las columnas se amontonen */
+}
+
+.data-table th {
+    background: #f8f9fa;
+    padding: 18px 15px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-bottom: 2px solid #eee;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.data-table td {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    color: var(--text-main);
+    font-size: 0.95rem;
+    vertical-align: middle;
+}
+
+/* --- ETIQUETAS DE ESTADO (BADGES) --- */
+.status-badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-block;
+    min-width: 100px;
+    text-align: center;
+}
+
+.status-pagada {
+    background-color: #d1fae5;
+    color: #065f46;
+    border: 1px solid #a7f3d0;
+}
+
+.status-pendiente {
+    background-color: #ffedd5;
+    color: #9a3412;
+    border: 1px solid #fed7aa;
+}
+
+/* --- BOTONES DE ACCIÓN --- */
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+.btn-view { background-color: var(--primary-color); }
+.btn-download { background-color: #666; }
+.btn-delete { background-color: #ff4d4d; border: none; cursor: pointer; }
+
+/* --- BOTÓN NUEVA FACTURA (Estilo Dashboard) --- */
+.btn-action.purple {
+    background: var(--primary-color);
+    color: white;
+    padding: 14px 25px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.3s;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.btn-action:hover {
+    opacity: 0.9;
+    transform: scale(1.02);
+}
+
+/* --- TEXTOS AUXILIARES --- */
+.text-center { text-align: center; }
+.italic { font-style: italic; color: var(--text-muted); }
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+    .contenido {
+        padding: 20px;
+    }
+
+    .page-header-actions {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .header-tools {
+        width: 100%;
+    }
+
+    .btn-action.purple {
+        width: 100%;
+        justify-content: center;
+    }
+}

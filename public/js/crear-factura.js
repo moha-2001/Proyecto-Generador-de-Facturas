@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // CARGAR CLIENTES EN EL SELECT (CORREGIDO)
     const clienteSelect = document.getElementById('clienteSelect');
     try {
-        // 👇👇 AQUÍ ESTÁ EL CAMBIO CLAVE: AÑADIMOS "/empresa/" 👇👇
+        // AQUÍ ESTÁ EL CAMBIO CLAVE: AÑADIMOS "/empresa/"
         const res = await fetch(`/api/clientes/empresa/${empresaId}`);
         const clientes = await res.json();
         
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (btnLogout) {
         btnLogout.addEventListener('click', () => {
             localStorage.removeItem('empresaId');
-            window.location.href = 'login.html';
+            window.location.href = 'index.html';
         });
     }
 });

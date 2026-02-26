@@ -1,0 +1,97 @@
+/* Contenedor principal que centra la tarjeta */
+body{
+    margin: 0;
+    padding: 0;
+}
+.contenido {
+    background: var(--bg-gradient);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px; 
+}
+
+.cajas {
+    background: var(--white);
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    width: 100%;
+    max-width: 450px;
+}
+.cajas header{
+    text-align: center;
+}
+.subtitulo {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+}
+
+/* El Switch de usuario (Empresa/Cliente) */
+.user-type-selector {
+    display: flex;
+    background: #eee;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    padding: 5px;
+    border: none;
+}
+
+.user-type-selector label {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: 0.3s;
+    font-weight: 600;
+}
+
+input[type="radio"] { display: none; }
+input[type="radio"]:checked + label {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Inputs */
+.input-group {
+    margin-bottom: 1.2rem;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+footer {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+footer a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Responsive para Móviles Pequeños */
+@media (max-width: 480px) {
+    .cajas {
+        padding: 1.5rem;
+    }
+    h2 { font-size: 1.5rem; }
+}

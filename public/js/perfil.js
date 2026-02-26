@@ -1,12 +1,12 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const empresaId = localStorage.getItem('empresaId');
-    if (!empresaId) window.location.href = 'login.html';
+    if (!empresaId) window.location.href = 'index.html';
     const btnLogout = document.getElementById('btnLogout');
     if(btnLogout) {
         btnLogout.addEventListener('click', () => {
             if(confirm("¿Seguro que quieres salir?")) {
                 localStorage.clear();
-                window.location.href = 'login.html'; 
+                window.location.href = 'index.html'; 
             }
         });
     }

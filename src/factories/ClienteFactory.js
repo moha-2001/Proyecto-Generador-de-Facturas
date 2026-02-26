@@ -12,7 +12,7 @@ class ClienteFactory {
             telefono: datos.telefono,
             direccion: datos.direccion,
             password: datos.password, 
-            cambiar_password: true // Forzamos cambio de pass al inicio
+            cambiar_password: true 
         };
     }
 }

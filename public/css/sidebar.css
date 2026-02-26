@@ -1,0 +1,147 @@
+/* --- SIDEBAR el meno nav de las paginas con un solo css  --- */
+.sidebar {
+    width: 260px;
+    background: var(--white);
+    height: 100vh;
+    padding: 25px;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+/* Logo */
+.sidebar .logo h2 {
+    color: var(--primary-color);
+    margin-bottom: 40px;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+/* Lista de Navegación */
+.sidebar nav {
+    flex-grow: 1;
+}
+
+.menu {
+    list-style: none;
+    padding: 0;
+}
+
+.menu li {
+    margin-bottom: 8px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    border-radius: 8px;
+    transition: 0.3s;
+    font-weight: 500;
+}
+
+/* Estado Activo y Hover */
+.menu a:hover, 
+.menu li.active a {
+    background: #f0f0ff;
+    color: var(--primary-color);
+}
+
+.menu a i {
+    width: 20px;
+    text-align: center;
+}
+
+/* Botón Cerrar Sesión */
+.btncerrar {
+    margin-top: auto;
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.3s;
+}
+
+.btncerrar:hover {
+    background: #fa5252;
+}
+
+/* --- DISEÑO RESPONSIVE  --- */
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        top: auto;
+        width: 100%;
+        height: 70px; /* Menú compacto abajo */
+        flex-direction: row;
+        padding: 0 10px;
+        align-items: center;
+        justify-content: space-around;
+        box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    }
+
+    .sidebar .logo {
+        display: none; /* No mostramos logo en la barra inferior */
+    }
+
+    .sidebar nav {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .menu {
+        display: flex;
+        justify-content: space-around;
+        width: 100%;
+    }
+
+    .menu li {
+        margin-bottom: 0;
+    }
+
+    .menu a {
+        flex-direction: column; 
+        gap: 4px;
+        padding: 8px 5px;
+        font-size: 0.65rem;
+        background: transparent !important;
+    }
+
+    .menu a i {
+        font-size: 1.2rem;
+    }
+
+    .btncerrar {
+        margin-top: 0;
+        background: transparent;
+        color: #ff6b6b;
+        flex-direction: column;
+        padding: 5px;
+        font-size: 0.65rem;
+        width: auto;
+    }
+
+    .btncerrar i {
+        font-size: 1.2rem;
+    }
+    
+    .btncerrar span {
+        display: block; 
+    }
+}

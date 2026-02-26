@@ -16,5 +16,9 @@ router.put('/:id', (req, res) => clienteController.actualizarCliente(req, res));
 router.delete('/:id', (req, res) => clienteController.eliminarCliente(req, res));
 
 
+// ESTA ES LA QUE PIDE TU HTML
+router.put('/cambiar-password/:id', (req, res) => clienteController.cambiarPasswordInicial(req, res));
+// Esta es la de seguridad (cuando ya están logueados)
 router.put('/cambiar-password-seguro/:id', (req, res) => clienteController.cambiarPasswordSeguro(req, res));
+
 module.exports = router;

@@ -9,7 +9,7 @@ const ClienteSchema = new mongoose.Schema({
     cif_nif: { type: String, required: true },
     telefono: String,
     direccion: String,
-    cambiar_password: { type: Boolean, default: true } // Importante
+    cambiar_password: { type: Boolean, default: true } 
 });
 ClienteSchema.pre('save', async function() {
     if (!this.isModified('password')) return;

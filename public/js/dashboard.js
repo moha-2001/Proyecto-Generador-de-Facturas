@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if(btnLogout) {
         btnLogout.addEventListener('click', () => {
             localStorage.removeItem('empresaId');
-            window.location.href = 'login.html';
+            window.location.href = 'index.html';
         });
     }
 });

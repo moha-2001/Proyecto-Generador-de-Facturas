@@ -2,17 +2,15 @@ const ClienteDAO = require('../dao/ClienteDAO');
 const ClienteFactory = require('../factories/ClienteFactory'); // ¡Usamos Factory!
 const bcrypt = require('bcryptjs');
 
-// 🟢 CAMBIO IMPORTANTE: Ahora es una CLASE (POO)
+// clase con metdos async para manejar clientes, usando DAO para acceso a datos y Factory para preparar datos
 class ClienteController {
 
     async loginCliente(req, res) {
         try {
             const { email, password } = req.body;
-            // 🟢 USAMOS DAO, NO MODELO
+            // USAMOS DAO, NO MODELO
             const cliente = await ClienteDAO.buscarPorEmail(email);
-            
             if (!cliente) return res.status(401).json({ error: 'Email no encontrado' });
-
             // Verificación contraseña
             let esCorrecta = false;
             if (cliente.password === password) {
@@ -22,7 +20,6 @@ class ClienteController {
                     esCorrecta = await bcrypt.compare(password, cliente.password);
                 } catch (e) { esCorrecta = false; }
             }
-
             if (!esCorrecta) return res.status(401).json({ error: 'Contraseña incorrecta' });
 
             res.json({ 
@@ -39,10 +36,10 @@ class ClienteController {
 
     async crearCliente(req, res) {
         try {
-            // 🟢 USAMOS FACTORY PARA PREPARAR DATOS
+            // USAMOS FACTORY PARA PREPARAR DATOS
             const datosLimpios = ClienteFactory.crearCliente(req.body);
             
-            // 🟢 USAMOS DAO PARA GUARDAR
+            // USAMOS DAO PARA GUARDAR
             const clienteGuardado = await ClienteDAO.crear(datosLimpios);
             
             res.status(201).json({ 
@@ -101,6 +98,33 @@ class ClienteController {
     }
 
     // Métodos de contraseña...
+    async cambiarPasswordInicial(req, res) {
+        try {
+            const { id } = req.params;
+            const { nuevaPassword } = req.body;
+
+            // VALIDACIÓN DE SEGURIDAD (Backend)
+            const passwordRegex = /^[A-Z](?=.*\d)(?=.*[\W_]).{7,}$/;
+            if (!passwordRegex.test(nuevaPassword)) {
+                return res.status(400).json({ 
+                    error: 'La contraseña debe tener mínimo 8 caracteres, EMPEZAR por mayúscula, y tener un número y un carácter especial.' 
+                });
+            }
+            // 1. Encriptamos la nueva contraseña
+            const salt = await bcrypt.genSalt(10);
+            const passwordHash = await bcrypt.hash(nuevaPassword, salt);
+            // 2. Guardamos y quitamos el aviso
+            const clienteActualizado = await ClienteDAO.actualizar(id, { 
+                password: passwordHash, 
+                cambiar_password: false 
+            });
+            if (!clienteActualizado) return res.status(404).json({ error: 'Cliente no encontrado' });
+            res.json({ mensaje: 'Contraseña actualizada correctamente' });
+        } catch (error) {
+            console.error("Error en cambiarPasswordInicial:", error);
+            res.status(500).json({ error: error.message });
+        }
+    }
     async cambiarPasswordSeguro(req, res) {
         try {
             const { id } = req.params;
@@ -113,9 +137,7 @@ class ClienteController {
             let esCorrecta = false;
             if (cliente.password === passwordActual) esCorrecta = true;
             else esCorrecta = await bcrypt.compare(passwordActual, cliente.password);
-            
             if (!esCorrecta) return res.status(400).json({ error: 'Contraseña actual incorrecta' });
-
             // Actualizar (Usamos el DAO para actualizar)
             // Nota: Aquí dependemos de que el pre-save hook del Modelo haga el hash, 
             // o lo hasheamos aquí. Para simplificar, enviamos al DAO.
@@ -123,7 +145,6 @@ class ClienteController {
                 password: passwordNueva, 
                 cambiar_password: false 
             });
-
             res.json({ mensaje: 'Contraseña actualizada' });
         } catch (error) {
             res.status(500).json({ error: error.message });

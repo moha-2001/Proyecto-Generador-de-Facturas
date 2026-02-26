@@ -13,7 +13,7 @@ const FacturaSchema = new mongoose.Schema({
         precio_unitario: { type: Number, required: true },
         subtotal: { type: Number, required: true }
     }],
-    subtotal: { type: Number, required: true }, // Suma de los subtotales de los items
+    subtotal: { type: Number, required: true }, 
     iva_amount: { type: Number, required: true },
     total: { type: Number, required: true },
     notas: { type: String }
