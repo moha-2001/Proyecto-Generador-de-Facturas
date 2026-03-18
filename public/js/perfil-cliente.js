@@ -73,9 +73,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // ==========================================================
-    // 5. CAMBIAR CONTRASEÑA (PUT)
-    // ==========================================================
+    // CAMBIAR CONTRASEÑA 
     document.getElementById('formPassword').addEventListener('submit', async (e) => {
         e.preventDefault();
 

@@ -33,6 +33,12 @@ class FacturaDAO {
             { new: true }
         );
     }
+    // Añade esto a tu FacturaDAO si no lo tienes
+    async actualizar(id, datosActualizados) {
+        // Busca la factura por ID y la actualiza con los nuevos datos.
+        // El { new: true } es para que devuelva la factura ya actualizada.
+        return await Factura.findByIdAndUpdate(id, datosActualizados, { new: true });
+    }
 
     async eliminar(id) {
         return await Factura.findByIdAndDelete(id);

@@ -1,7 +1,7 @@
 document.getElementById('registroForm')?.addEventListener('submit', async (e) => {
-    e.preventDefault(); // Evita que la página se recargue
+    e.preventDefault(); 
 
-    // 1. Coger los datos del HTML
+    // Coger los datos del HTML
     const datos = {
         nombre: document.getElementById('nombre').value,
         cif_nif: document.getElementById('cif').value,
@@ -19,7 +19,7 @@ document.getElementById('registroForm')?.addEventListener('submit', async (e) =>
     }
 
     try {
-        // 2. Enviar al Backend (Fetch API)
+        // Enviar al Backend 
         const respuesta = await fetch('/api/empresas', {
             method: 'POST',
             headers: {

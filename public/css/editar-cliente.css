@@ -1,5 +1,4 @@
-/* --- ESTRUCTURA GENERAL --- */
-.dashboard-body {
+body {
     display: flex;
     background-color: var(--gray-light);
     min-height: 100vh;

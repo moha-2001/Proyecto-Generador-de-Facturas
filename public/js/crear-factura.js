@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if(displayTot) displayTot.textContent = total.toFixed(2) + ' €';
     }
 
-    // 4. ENVIAR FORMULARIO (Crear Factura)
+    // ENVIAR FORMULARIO (Crear Factura)
 
     const formFactura = document.getElementById('facturaForm');
     if(formFactura) {
@@ -124,7 +124,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 if (res.ok) {
                     alert(`¡Éxito! Factura creada. \nPDF guardado.`);
-                    window.location.href = 'facturas.html'; // Redirigir a la lista
+                    window.location.href = 'facturas.html'; 
                 } else {
                     alert('Error: ' + (data.error || 'Error desconocido'));
                 }
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // 3. Botón Cerrar Sesión
+    // Botón Cerrar Sesión
     const btnLogout = document.getElementById('btnLogout');
     if (btnLogout) {
         btnLogout.addEventListener('click', () => {

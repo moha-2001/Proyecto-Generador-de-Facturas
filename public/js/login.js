@@ -30,7 +30,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
                 localStorage.setItem('clienteNombre', data.nombre);
                 
                 if (data.requiereCambio) {
-                    window.location.href = 'cambiar-password.html'; // Redirigir a cambio forzoso
+                    window.location.href = 'cambiar-password.html'; // Redirigir a cambio forzoso de contraseña para entrar
                 } else {
                     window.location.href = 'panel-cliente.html'; // Entrar normal
                 }

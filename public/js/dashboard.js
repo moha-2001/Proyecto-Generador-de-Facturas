@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    // 1. Verificar si hay usuario logueado
+    // Verificar si hay usuario logueado
     const empresaId = localStorage.getItem('empresaId');
     if (!empresaId) {
         window.location.href = 'index.html';

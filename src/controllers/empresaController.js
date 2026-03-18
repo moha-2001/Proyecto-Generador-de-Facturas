@@ -4,7 +4,6 @@ const bcrypt = require('bcryptjs');
 const registrarEmpresa = async (req, res) => {
     try {
         const { password } = req.body;
-
         //  VALIDACIÓN DE SEGURIDAD AL REGISTRAR
         if (password) {
             const passwordRegex = /^[A-Z](?=.*\d)(?=.*[\W_]).{7,}$/;
@@ -14,7 +13,6 @@ const registrarEmpresa = async (req, res) => {
                 });
             }
         }
-
         // Guardamos la empresa usando el DAO
         const empresa = await EmpresaDAO.crear(req.body);
         res.status(201).json({
@@ -113,6 +111,17 @@ const cambiarPassword = async (req, res) => {
         console.error(error);
         res.status(500).json({ error: error.message });
     }
+        // para encriptar la contraseña antes de guardarla en la base de datos, usando bcryptjs. Esto se hace en el pre-save hook del esquema de Mongoose, asegurando que todas las contraseñas se guarden de forma segura.
+    const bcrypt = require('bcryptjs');
+
+    EmpresaSchema.pre('save', async function(next) {
+        if (!this.isModified('password')) return next();
+        const salt = await bcrypt.genSalt(10);
+        this.password = await bcrypt.hash(this.password, salt);
+        next();
+    });
 };
+
+
 
 module.exports = { registrarEmpresa, loginEmpresa, obtenerEmpresa, actualizarEmpresa, cambiarPassword };

@@ -100,18 +100,18 @@ window.cambiarEstado = async (facturaId, selectElement) => {
 
 // NUEVA FUNCIÓN: ELIMINAR FACTURA
 window.eliminarFactura = async (id) => {
-    // 1. Preguntar confirmación
+    //  Preguntar confirmación
     if (!confirm("¿Estás seguro de que quieres eliminar esta factura permanentemente?")) {
         return;
     }
 
     try {
-        // 2. Llamar al backend
+        //  Llamar al backend
         const res = await fetch(`/api/facturas/${id}`, { method: 'DELETE' });
 
         if (res.ok) {
             alert("Factura eliminada");
-            // 3. Recargar la página para ver los cambios
+            //  Recargar la página para ver los cambios
             location.reload(); 
         } else {
             const data = await res.json();

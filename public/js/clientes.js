@@ -7,24 +7,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Función para cargar la tabla
     async function cargarClientes() {
         try {
-            //  AQUÍ ESTÁ EL CAMBIO IMPORTANTE 
-            const res = await fetch(`/api/clientes/empresa/${empresaId}`);
-            
+            const res = await fetch(`/api/clientes/empresa/${empresaId}`);            
             const clientes = await res.json();
-
             tableBody.innerHTML = '';
-
             // Si devuelve error o no es un array, lo manejamos
             if (!Array.isArray(clientes)) {
                 console.error("Respuesta inesperada:", clientes);
                 return;
             }
-
             if (clientes.length === 0) {
                 tableBody.innerHTML = '<tr><td colspan="5" style="text-align:center;">No tienes clientes.</td></tr>';
                 return;
             }
-
             clientes.forEach(cliente => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -35,8 +29,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <td>
                         <button class="action-btn-small btn-edit" onclick="location.href='editar-cliente.html?id=${cliente._id}'">
                             <i class="fas fa-edit"></i>
-                        </button>
-                        
+                        </button>           
                         <button class="action-btn-small btn-delete" data-id="${cliente._id}">
                             <i class="fas fa-trash"></i>
                         </button>
@@ -44,7 +37,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 `;
                 tableBody.appendChild(row);
             });
-
             // Asignar eventos a los botones de borrar
             document.querySelectorAll('.btn-delete').forEach(btn => {
                 btn.addEventListener('click', (e) => {
@@ -62,7 +54,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    // Lógica de Borrado (Esta se queda igual porque usa DELETE, no choca con GET)
+    // Lógica de Borrado Esta se queda igual porque usa DELETE, no choca con GET
     window.confirmarBorrado = async (id) => {
         if (confirm("¿Estás seguro de que quieres eliminar a este cliente? Se borrarán sus datos de acceso.")) {
             try {

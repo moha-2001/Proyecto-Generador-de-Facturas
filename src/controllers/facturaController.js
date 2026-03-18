@@ -74,12 +74,37 @@ class FacturaController {
     async actualizarEstado(req, res) {
         try {
             const { id } = req.params;
-            const { estado } = req.body;
-            const factura = await FacturaDAO.actualizarEstado(id, estado);
-            if (!factura) return res.status(404).json({ error: 'Factura no encontrada' });
-            res.json({ mensaje: 'Estado actualizado', factura });
+            const { estado } = req.body; 
+
+            // 1. Actualizamos el estado en la base de datos
+            await FacturaDAO.actualizar(id, { estado: estado });
+
+            // 2. Buscamos la factura COMPLETA (con los datos del cliente y empresa poblados)
+            // Esto es vital porque el PDF necesita imprimir el nombre del cliente, dirección, etc.
+            const facturaCompleta = await FacturaDAO.buscarPorId(id);
+
+            if (!facturaCompleta) {
+                return res.status(404).json({ error: 'Factura no encontrada' });
+            }
+
+            // 3. REGENERAMOS EL PDF
+            // Calculamos la ruta donde debe guardarse para sobreescribir el antiguo
+            const directorio = path.join(__dirname, '../../facturas');
+            const nombreArchivo = `factura-${facturaCompleta.numero}.pdf`;
+            const rutaCompleta = path.join(directorio, nombreArchivo);
+            
+            // Usamos la función real importada: construirPDF
+            construirPDF(facturaCompleta, rutaCompleta); 
+
+            // 4. Respondemos al frontend
+            res.json({ 
+                mensaje: 'Estado actualizado y PDF regenerado correctamente', 
+                factura: facturaCompleta 
+            });
+
         } catch (error) {
-            res.status(500).json({ error: error.message });
+            console.error("Error al actualizar el estado:", error);
+            res.status(500).json({ error: 'Error al actualizar y regenerar la factura' });
         }
     }
 

@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    // 1. Obtener el ID de la URL (ej: editar-cliente.html?id=ABC)
+    //  Obtener el ID de la URL 
     const params = new URLSearchParams(window.location.search);
     const clienteId = params.get('id');
 
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    // 2. Cargar datos actuales del cliente (GET)
+    //  Cargar datos actuales del cliente (GET)
     try {
         console.log("Cargando datos del cliente ID:", clienteId);
 
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.location.href = 'clientes.html'; // Volver si falla
     }
 
-    // 3. Guardar cambios (PUT)
+    //  Guardar cambios (PUT)
     document.getElementById('editarClienteForm').addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         try {
             console.log("Enviando actualización...", datosActualizados);
 
-            // La ruta PUT suele ser directa con el ID (sin /detalle/)
+            // La ruta PUT suele ser directa con el ID 
             const res = await fetch(`/api/clientes/${clienteId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
