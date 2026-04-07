@@ -1,10 +1,11 @@
-const EmpresaDAO = require('../dao/EmpresaDAO');
+const Empresa = require('../models/Empresa'); // Llamamos directo a la Base de Datos
 const bcrypt = require('bcryptjs');
 
 const registrarEmpresa = async (req, res) => {
     try {
         const { password } = req.body;
-        //  VALIDACIÓN DE SEGURIDAD AL REGISTRAR
+
+        // VALIDACIÓN DE SEGURIDAD
         if (password) {
             const passwordRegex = /^[A-Z](?=.*\d)(?=.*[\W_]).{7,}$/;
             if (!passwordRegex.test(password)) {
@@ -13,33 +14,44 @@ const registrarEmpresa = async (req, res) => {
                 });
             }
         }
-        // Guardamos la empresa usando el DAO
-        const empresa = await EmpresaDAO.crear(req.body);
+
+        // GUARDADO DIRECTO CON MONGOOSE 
+        const nuevaEmpresa = new Empresa(req.body);
+        const empresaGuardada = await nuevaEmpresa.save();
+
         res.status(201).json({
             mensaje: 'Empresa registrada con éxito',
-            empresa: empresa
+            empresa: empresaGuardada
         });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        // Mongoose lanzará error si el email o CIF ya existen (por el unique: true)
+        res.status(500).json({ error: 'Error al registrar la empresa: ' + error.message });
     }
 };
 
 const loginEmpresa = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const empresa = await EmpresaDAO.buscarPorEmail(email);
+        
+        // BÚSQUEDA DIRECTA CON MONGOOSE
+        const empresa = await Empresa.findOne({ email: email });
+        
         if (!empresa) {
             return res.status(401).json({ error: 'Usuario no encontrado' });
         }
+
         let esCorrecta = false;
+        // Comprobación por si en pruebas metiste contraseñas sin encriptar
         if (empresa.password === password) {
             esCorrecta = true;
         } else {
             esCorrecta = await bcrypt.compare(password, empresa.password);
         }
+
         if (!esCorrecta) {
             return res.status(401).json({ error: 'Contraseña incorrecta' });
         }
+
         res.json({ 
             mensaje: 'Login correcto', 
             id: empresa._id,
@@ -54,7 +66,8 @@ const loginEmpresa = async (req, res) => {
 
 const obtenerEmpresa = async (req, res) => {
     try {
-        const empresa = await EmpresaDAO.buscarPorId(req.params.id);
+        // BÚSQUEDA POR ID CON MONGOOSE
+        const empresa = await Empresa.findById(req.params.id);
         res.json(empresa);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -63,7 +76,12 @@ const obtenerEmpresa = async (req, res) => {
 
 const actualizarEmpresa = async (req, res) => {
     try {
-        const empresaActualizada = await EmpresaDAO.actualizar(req.params.id, req.body);
+        // ACTUALIZACIÓN DIRECTA CON MONGOOSE
+        const empresaActualizada = await Empresa.findByIdAndUpdate(
+            req.params.id, 
+            req.body, 
+            { new: true } // Para que devuelva el dato ya actualizado
+        );
         res.json({ mensaje: "Empresa actualizada", empresa: empresaActualizada });
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -75,7 +93,7 @@ const cambiarPassword = async (req, res) => {
         const { id } = req.params;
         const { passwordActual, passwordNueva } = req.body;
 
-        //  VALIDACIÓN DE SEGURIDAD AL CAMBIAR CONTRASEÑA
+        // VALIDACIÓN DE SEGURIDAD
         const passwordRegex = /^[A-Z](?=.*\d)(?=.*[\W_]).{7,}$/;
         if (!passwordRegex.test(passwordNueva)) {
             return res.status(400).json({ 
@@ -83,10 +101,9 @@ const cambiarPassword = async (req, res) => {
             });
         }
 
-        const Empresa = require('../models/Empresa');
         const empresa = await Empresa.findById(id);
-
         if (!empresa) return res.status(404).json({ error: 'Empresa no encontrada' });
+
         let esCorrecta = false;
         if (empresa.password === passwordActual) {
             esCorrecta = true;
@@ -97,31 +114,22 @@ const cambiarPassword = async (req, res) => {
                 esCorrecta = false;
             }
         }
+
         if (!esCorrecta) {
             return res.status(400).json({ error: 'La contraseña actual no es correcta' });
         }
+
+        // Encriptar y guardar
         const salt = await bcrypt.genSalt(10);
         empresa.password = await bcrypt.hash(passwordNueva, salt);
-        
         await empresa.save();
 
-        res.json({ mensaje: 'Contraseña actualizada y securizada correctamente' });
+        res.json({ mensaje: 'Contraseña actualizada correctamente' });
 
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: error.message });
     }
-        // para encriptar la contraseña antes de guardarla en la base de datos, usando bcryptjs. Esto se hace en el pre-save hook del esquema de Mongoose, asegurando que todas las contraseñas se guarden de forma segura.
-    const bcrypt = require('bcryptjs');
-
-    EmpresaSchema.pre('save', async function(next) {
-        if (!this.isModified('password')) return next();
-        const salt = await bcrypt.genSalt(10);
-        this.password = await bcrypt.hash(this.password, salt);
-        next();
-    });
 };
-
-
 
 module.exports = { registrarEmpresa, loginEmpresa, obtenerEmpresa, actualizarEmpresa, cambiarPassword };

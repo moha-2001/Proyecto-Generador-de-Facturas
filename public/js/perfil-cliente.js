@@ -32,9 +32,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (data) {
             document.getElementById('nombreCli').value = data.nombre || '';
             document.getElementById('emailCli').value  = data.email || '';
-            document.getElementById('cifCli').value    = data.cif_nif || '';  // BD: cif_nif
-            document.getElementById('telCli').value    = data.telefono || ''; // BD: telefono
-            document.getElementById('dirCli').value    = data.direccion || '';// BD: direccion
+            document.getElementById('cifCli').value    = data.cif_nif || '';  
+            document.getElementById('telCli').value    = data.telefono || ''; 
+            document.getElementById('dirCli').value    = data.direccion || '';
             
         } 
 
