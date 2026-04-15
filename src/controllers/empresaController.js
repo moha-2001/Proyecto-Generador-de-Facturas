@@ -5,7 +5,7 @@ const registrarEmpresa = async (req, res) => {
     try {
         const { password } = req.body;
 
-        // VALIDACIÓN DE SEGURIDAD
+        // VALIDACIÓN DE SEGURIDAD PARA LA CONTRASEÑA
         if (password) {
             const passwordRegex = /^[A-Z](?=.*\d)(?=.*[\W_]).{7,}$/;
             if (!passwordRegex.test(password)) {

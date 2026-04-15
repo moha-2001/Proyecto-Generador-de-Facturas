@@ -7,8 +7,6 @@ const app = express();
 
 // CONECTAR BASE DE DATOS
 connectDB();
-
-// MIDDLEWARES (Configuraciones)
 app.use(express.json()); 
 
 // La web se carga ANTES de las rutas
@@ -25,7 +23,7 @@ app.use('/api/facturas', require('./routes/facturaRoutes'));
 // ARRANCAR SERVIDOR
 const PORT = process.env.PORT || 3000;
 
-// En local puedes dejarlo sin IP específica, o poner '0.0.0.0' para asegurar
+// En local puedes dejarlo sin IP específica
 app.listen(PORT, '0.0.0.0', () => {
     console.log(` Servidor corriendo en puerto ${PORT}`);
 });

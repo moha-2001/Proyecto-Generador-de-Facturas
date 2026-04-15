@@ -179,7 +179,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 let resultado = await respuesta.json();
 
                 if (respuesta.ok == true) {
-                    alert('¡factura creada con exito y pdf generado!');
+                    alert('¡factura creada con exito!');
                     window.location.href = 'facturas.html'; // lo mandamos a la lista
                 } else {
                     alert('error del servidor: ' + resultado.error);
