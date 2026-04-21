@@ -1,11 +1,11 @@
 const Cliente = require('../models/Cliente'); // Importamos directamente el Modelo
 const bcrypt = require('bcryptjs');
 
-class ClienteController {
+class ClienteController { // Creamos una clase para organizar mejor los métodos de clientes
     async loginCliente(req, res) {
         try {
             const { email, password } = req.body;
-            //  Búsqueda directa con Mongoose
+            // Búsqueda directa con Mongoose
             const cliente = await Cliente.findOne({ email: email });
             if (!cliente) return res.status(401).json({ error: 'Email no encontrado' });
             // Verificación contraseña
@@ -32,11 +32,11 @@ class ClienteController {
 
     async crearCliente(req, res) {
         try {
-            // Si al crear el cliente no le mandan contraseña, le ponemos el CIF por defecto
+            // Si al crear el cliente no le mandan contraseña, le ponemos el CIF/DNI por defecto
             if (!req.body.password) {
                 req.body.password = req.body.cif_nif; 
             }
-            // Guardado directo con Mongoose (El Modelo encriptará la password automáticamente)
+            // Guardado directo con Mongoose el modelo encriptará la contraseña automaticamente
             const nuevoCliente = new Cliente(req.body);
             const clienteGuardado = await nuevoCliente.save();
             res.status(201).json({ 
@@ -91,8 +91,8 @@ class ClienteController {
             res.status(500).json({ error: error.message });
         }
     }
-    // --- Métodos de Contraseña ---
-    async cambiarPasswordInicial(req, res) {
+    // Métodos de Contraseña 
+    async cambiarPasswordInicial(req, res) {// Método para cambiar la contraseña al hacer el primer login.
         try {
             const { id } = req.params;
             const { nuevaPassword } = req.body;
@@ -103,13 +103,13 @@ class ClienteController {
                     error: 'La contraseña debe tener mínimo 8 caracteres, EMPEZAR por mayúscula, y tener un número y un carácter especial.' 
                 });
             }
-            // 1. Buscamos el cliente
+            // Buscamos el cliente
             const cliente = await Cliente.findById(id);
             if (!cliente) return res.status(404).json({ error: 'Cliente no encontrado' });
-            // 2. Le asignamos la nueva contraseña (en texto plano) y le quitamos el aviso
+            // Le asignamos la nueva contraseña (en texto plano) y le quitamos el aviso
             cliente.password = nuevaPassword;
             cliente.cambiar_password = false;
-            // 3. Al hacer .save(), el Mongoose salta y encripta la contraseña automáticamente
+            // Al hacer .save(), el Mongoose salta y encripta la contraseña automáticamente
             await cliente.save();
 
             res.json({ mensaje: 'Contraseña actualizada correctamente' });
@@ -119,7 +119,7 @@ class ClienteController {
         }
     }
 
-    async cambiarPasswordSeguro(req, res) {
+    async cambiarPasswordSeguro(req, res) {// Método para cambiar la contraseña a través del panel del cliente.
         try {
             const { id } = req.params;
             const { passwordActual, passwordNueva } = req.body;

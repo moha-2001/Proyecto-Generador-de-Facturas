@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 
-// Configuración del Transporte (Recuerda poner tu correo y contraseña de aplicación)
+// Configuración del Transporte 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -12,7 +12,7 @@ const transporter = nodemailer.createTransport({
 //  RECIBIMOS EL NIF TAMBIÉN
 const enviarFacturaPorCorreo = async (clienteEmail, clienteNombre, numeroFactura, rutaPDF, clienteNif) => {
     try {
-        // Enlace a tu web (Si estás en local usa localhost, si lo subes usa tu dominio)
+        // Enlace la web
         const urlWeb = "http://localhost:3000"; 
 
         const mailOptions = {

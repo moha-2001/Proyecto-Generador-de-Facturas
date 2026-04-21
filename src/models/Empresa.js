@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs'); 
-
+// Define la estructura exacta, los tipos de datos y las reglas de validación 
+// que debe cumplir una empresa antes de guardarse en la base de datos MongoDB
 const EmpresaSchema = new mongoose.Schema({
     nombre: { type: String, required: true },
     email: { type: String, required: true, unique: true },
@@ -11,7 +12,7 @@ const EmpresaSchema = new mongoose.Schema({
     logo: { type: String } 
 });
 
-// RIGGER DE SEGURIDAD: Se ejecuta antes de guardar en MongoDB
+// encriptación de contraseña: Se ejecuta antes de guardar en MongoDB
 EmpresaSchema.pre('save', async function() {
     // Si la contraseña no se ha modificado, pasa de largo
     if (!this.isModified('password')) return;

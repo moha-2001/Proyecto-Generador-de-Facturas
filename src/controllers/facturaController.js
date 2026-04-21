@@ -5,7 +5,7 @@ const { enviarFacturaPorCorreo } = require('../services/emailService');
 const path = require('path');
 const fs = require('fs');
 
-class FacturaController {
+class FacturaController { // Creamos una clase para organizar mejor los métodos relacionados con las facturas
 
     async crearFactura(req, res) {
         try {
@@ -21,7 +21,7 @@ class FacturaController {
             // recorremos todas las facturas una por una
             for (let i = 0; i < facturasEmpresa.length; i++) {
                 let numeroFactura = facturasEmpresa[i].numero;
-                // comprobamos que el numero exista y sea de este año
+                // comprobamos que el numero exista
                 if (numeroFactura != null && numeroFactura.includes("FAC-" + anioActual)) {
                     // lo partimos por los guiones
                     let partes = numeroFactura.split('-');

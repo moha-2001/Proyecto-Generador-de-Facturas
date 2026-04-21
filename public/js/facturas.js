@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Color inicial del select
             const colorClass = fac.estado === 'Pagada' ? 'status-select-paid' : 'status-select-pending';
             
-            const row = `
+const row = `
                 <tr>
                     <td><strong>${fac.numero}</strong></td>
                     <td>${fac.cliente_id ? fac.cliente_id.nombre : 'Cliente Eliminado'}</td>
@@ -47,17 +47,19 @@ document.addEventListener('DOMContentLoaded', async () => {
                         </select>
                     </td>
                     <td>
-                        <a href="/facturas/${nombreArchivo}" target="_blank" class="action-btn-small" style="background:#6c63ff; padding: 6px 10px;">
-                            <i class="fas fa-eye"></i>
-                        </a>
-                        
-                        <a href="/facturas/${nombreArchivo}" download class="action-btn-small" style="background:#666; padding: 6px 10px;">
-                            <i class="fas fa-download"></i>
-                        </a>
+                        <div class="action-buttons">
+                            <a href="/facturas/${nombreArchivo}" target="_blank" class="action-btn btn-view" title="Ver PDF">
+                                <i class="fas fa-eye"></i>
+                            </a>
+                            
+                            <a href="/facturas/${nombreArchivo}" download class="action-btn btn-download" title="Descargar">
+                                <i class="fas fa-download"></i>
+                            </a>
 
-                        <button class="action-btn-small" style="background:#ef4444; padding: 6px 10px; border:none; cursor:pointer; color:white; margin-left:5px;" onclick="eliminarFactura('${fac._id}')">
-                            <i class="fas fa-trash"></i>
-                        </button>
+                            <button class="action-btn btn-delete" onclick="eliminarFactura('${fac._id}')" title="Eliminar">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
                     </td>
                 </tr>
             `;

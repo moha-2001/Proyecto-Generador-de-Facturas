@@ -5,7 +5,7 @@ const registrarEmpresa = async (req, res) => {
     try {
         const { password } = req.body;
 
-        // VALIDACIÓN DE SEGURIDAD
+        // VALIDACIÓN DE SEGURIDAD PARA LA CONTRASEÑA
         if (password) {
             const passwordRegex = /^[A-Z](?=.*\d)(?=.*[\W_]).{7,}$/;
             if (!passwordRegex.test(password)) {
@@ -24,7 +24,7 @@ const registrarEmpresa = async (req, res) => {
             empresa: empresaGuardada
         });
     } catch (error) {
-        // Mongoose lanzará error si el email o CIF ya existen (por el unique: true)
+        // Mongoose lanzará error si el email o CIF ya existen 
         res.status(500).json({ error: 'Error al registrar la empresa: ' + error.message });
     }
 };
@@ -64,7 +64,7 @@ const loginEmpresa = async (req, res) => {
     }
 };
 
-const obtenerEmpresa = async (req, res) => {
+const obtenerEmpresa = async (req, res) => {//
     try {
         // BÚSQUEDA POR ID CON MONGOOSE
         const empresa = await Empresa.findById(req.params.id);

@@ -107,38 +107,48 @@ body {
 }
 
 /* --- ESTADOS Y ACCIONES --- */
-.status-badge {
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    font-weight: 600;
-}
-
-.status-pagada { background: #d1fae5; color: #065f46; }
-.status-pendiente { background: #ffedd5; color: #9a3412; }
-
+/* --- BOTONES DE ACCIÓN (ESTILO MODERNO) --- */
 .action-buttons {
     display: flex;
-    gap: 8px;
+    gap: 8px; /* Espacio entre los botones */
+    align-items: center;
 }
 
 .action-btn {
-    width: 35px;
-    height: 35px;
-    display: flex;
-    align-items: center;
+    display: inline-flex;
     justify-content: center;
-    border-radius: 8px;
-    color: white;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px; /* Bordes un poco más finos */
     text-decoration: none;
-    transition: transform 0.2s;
+    font-size: 14px; /* Tamaño del icono */
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-.btn-view { background: #4a90e2; }
-.btn-download { background: #666; }
+/* 👁️ Botón VER (Adaptado al color Azul del Portal Cliente) */
+.btn-view { 
+    color: #4a90e2; /* Color principal del cliente */
+    background-color: rgba(74, 144, 226, 0.1); /* Fondo azul transparente al 10% */
+}
+.btn-view:hover { 
+    background-color: #4a90e2; /* Se rellena al pasar el ratón */
+    color: white;
+    transform: translateY(-2px);
+}
 
-.action-btn:hover { transform: translateY(-2px); }
-
+/* ⬇️ Botón DESCARGAR (Gris neutro) */
+.btn-download { 
+    color: #4b5563; 
+    background-color: #f3f4f6; 
+}
+.btn-download:hover { 
+    background-color: #4b5563; 
+    color: white;
+    transform: translateY(-2px);
+}
 /* --- RESPONSIVE MÓVIL (MENÚ ABAJO) --- */
 @media (max-width: 768px) {
     body {

@@ -2,7 +2,7 @@ const PDFDocument = require('pdfkit');
 const fs = require('fs');
 
 function construirPDF(factura, pathDestino) {
-    // 1. Configuración inicial del documento
+    // Configuración inicial del documento
     const doc = new PDFDocument({ margin: 50, size: 'A4' });
     doc.pipe(fs.createWriteStream(pathDestino));
 
@@ -10,7 +10,7 @@ function construirPDF(factura, pathDestino) {
     const colorPrimario = '#4a90e2'; // Azul corporativo
     const colorTexto = '#333333';
     const colorGrisClaro = '#f5f5f5';
-    // 2. ENCABEZADO (Bajamos Y de 45 a 60 para dar aire)
+    // ENCABEZADO 
     const startYHeader = 60; 
     doc.fillColor(colorPrimario)
        .fontSize(24)
@@ -20,7 +20,7 @@ function construirPDF(factura, pathDestino) {
        .fontSize(20)
        .text('FACTURA', 400, startYHeader, { align: 'right' });
     doc.fontSize(10).font('Helvetica');
-    const startYDetails = startYHeader + 30; // 90 aprox
+    const startYDetails = startYHeader + 30; 
     doc.text(`NÚMERO: ${factura.numero}`, 300, startYDetails, { align: 'right' });
     const fechaEmision = new Date(factura.fecha_emision).toLocaleDateString('es-ES');
     doc.text(`FECHA: ${fechaEmision}`, 300, startYDetails + 15, { align: 'right' });
@@ -43,11 +43,11 @@ function construirPDF(factura, pathDestino) {
        .text(textoEstado, 450, yEstado + 5, { width: 100, align: 'center' }); // +5 para centrar verticalmente
     doc.fillColor(colorTexto);
     // LÍNEA SEPARADORA
-    const yLinea = yEstado + 40; // Bajamos más la línea (aprox 180)
+    const yLinea = yEstado + 40; // Bajamos más la línea 
     doc.moveDown(2);
     doc.moveTo(50, yLinea).lineTo(550, yLinea).strokeColor('#eeeeee').stroke();
 
-    // 3. INFORMACIÓN CLIENTE / EMPRESA
+    // INFORMACIÓN CLIENTE / EMPRESA
     const yInfo = yLinea + 25; 
     const empresa = factura.empresa_id;
     const cliente = factura.cliente_id;
@@ -70,7 +70,7 @@ function construirPDF(factura, pathDestino) {
     doc.text(emailCliente, 300, yInfo + 45);
     if(cifCliente) doc.text(`NIF: ${cifCliente}`, 300, yInfo + 60);
 
-    // 4. TABLA DE PRODUCTOS
+    // TABLA DE PRODUCTOS
     let y = yInfo + 100; 
     doc.rect(50, y, 500, 25).fill(colorGrisClaro);
     doc.fillColor(colorTexto).font('Helvetica-Bold').fontSize(9);
@@ -89,7 +89,7 @@ function construirPDF(factura, pathDestino) {
         doc.moveTo(50, y + 15).lineTo(550, y + 15).strokeColor('#eeeeee').stroke();
         y += 25;
     });
-    // 5. TOTALES
+    // TOTALES
     const yTotales = y + 20;
     doc.font('Helvetica').fillColor('#888888').text('Subtotal', 350, yTotales, { width: 90, align: 'right' });
     doc.fillColor(colorTexto).text(factura.subtotal.toFixed(2) + ' €', 450, yTotales, { width: 90, align: 'right' });
@@ -101,7 +101,7 @@ function construirPDF(factura, pathDestino) {
     doc.fillColor('white').font('Helvetica-Bold').fontSize(12);
     doc.text('TOTAL', 360, yTotales + 48);
     doc.text(factura.total.toFixed(2) + ' €', 450, yTotales + 48, { width: 80, align: 'right' });
-    // 6. PIE DE PÁGINA (Footer Fijo)
+    // PIE DE PÁGINA
     const bottomY = 750; 
     doc.fontSize(8).fillColor('#aaaaaa');
     doc.moveTo(50, bottomY - 15).lineTo(550, bottomY - 15).strokeColor('#eeeeee').stroke();

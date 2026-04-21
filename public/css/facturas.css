@@ -72,58 +72,94 @@ body {
     vertical-align: middle;
 }
 
-/* --- ETIQUETAS DE ESTADO (BADGES) --- */
+/* --- ETIQUETAS DE ESTADO --- */
 
-.status-badge {
-    padding: 5px 12px;
+/* --- SELECTORES DE ESTADO EN LA TABLA --- */
+.status-select {
+    padding: 6px 12px;
     border-radius: 20px;
     font-size: 0.85rem;
     font-weight: 600;
-    display: inline-block;
-    min-width: 100px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    outline: none;
+    appearance: none; /* Oculta la flecha fea por defecto en algunos navegadores */
     text-align: center;
 }
 
-.status-pagada {
-    background-color: #d1fae5;
-    color: #065f46;
-    border: 1px solid #a7f3d0;
-}
-.status-pendiente {
+/* Colores para cuando está Pendiente */
+.status-select-pending {
     background-color: #ffedd5;
     color: #9a3412;
-    border: 1px solid #fed7aa;
+    border-color: #fed7aa;
 }
 
-/* --- BOTONES DE ACCIÓN --- */
+/* Colores para cuando está Pagada */
+.status-select-paid {
+    background-color: #d1fae5;
+    color: #065f46;
+    border-color: #a7f3d0;
+}
 
+/* Efecto hover en el select */
+.status-select:hover {
+    filter: brightness(0.95);
+}
+/* --- BOTONES DE ACCIÓN --- */
 .action-buttons {
     display: flex;
-    gap: 8px;
+    gap: 8px; /* Espacio entre los botones */
+    align-items: center;
 }
 
 .action-btn {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 35px;
-    height: 35px;
-    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px; /* Bordes un poco más finos */
     text-decoration: none;
+    font-size: 14px; /* Tamaño del icono */
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+/* Botón VER */
+.btn-view { 
+    color: var(--primary-color, #6366f1); /* Color del icono */
+    background-color: rgba(99, 102, 241, 0.1); /* Fondo transparente al 10% */
+}
+.btn-view:hover { 
+    background-color: var(--primary-color, #6366f1); /* Se rellena al pasar el ratón */
     color: white;
-    transition: transform 0.2s, opacity 0.2s;
-}
-
-.action-btn:hover {
     transform: translateY(-2px);
-    opacity: 0.9;
 }
 
-.btn-view { background-color: var(--primary-color); }
-.btn-download { background-color: #666; }
-.btn-delete { background-color: #ff4d4d; border: none; cursor: pointer; }
+/* Botón DESCARGAR / EDITAR  */
+.btn-download { 
+    color: #4b5563; 
+    background-color: #f3f4f6; 
+}
+.btn-download:hover { 
+    background-color: #4b5563; 
+    color: white;
+    transform: translateY(-2px);
+}
 
-/* --- BOTÓN NUEVA FACTURA (Estilo Dashboard) --- */
+/* Botón ELIMINAR  */
+.btn-delete { 
+    color: #ef4444; 
+    background-color: rgba(239, 68, 68, 0.1); 
+}
+.btn-delete:hover { 
+    background-color: #ef4444; 
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* --- BOTÓN NUEVA FACTURA  --- */
 
 .btn-action.purple {
     background: var(--primary-color);

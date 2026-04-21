@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
 
 
-    // 5. enviar el formulario final al servidor (backend)
+    // 5. enviar el formulario final al servidor 
     let formulario = document.getElementById('facturaForm');
     
     if(formulario != null) {
@@ -165,7 +165,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 estado: document.getElementById('estadoFactura').value, 
                 items: listaProductos,
                 notas: document.getElementById('notas').value
-                // nota: no enviamos el numero de factura, el servidor lo calculara
+                // no enviamos el numero de factura, el servidor lo calculara
             };
 
             try {
@@ -197,8 +197,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     let botonSalir = document.getElementById('btnLogout');
     if (botonSalir != null) {
         botonSalir.addEventListener('click', function() {
-            localStorage.removeItem('empresaId'); // borramos su rastro
-            window.location.href = 'index.html'; // lo echamos a la calle
+            localStorage.removeItem('empresaId'); 
+            window.location.href = 'index.html'; 
         });
     }
     

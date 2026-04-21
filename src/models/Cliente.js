@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-
-const ClienteSchema = new mongoose.Schema({
+// Define la estructura exacta, los tipos de datos y las reglas de validación 
+// que debe cumplir un clinte  antes de guardarse en la base de datos MongoDB
+const ClienteSchema = new mongoose.Schema({ // Cada cliente pertenece a una empresa
     empresa_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Empresa', required: true },
     nombre: { type: String, required: true },
     email: { type: String, required: true },

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-
+// Define la estructura exacta, los tipos de datos y las reglas de validación 
+// que debe cumplir una notificacion antes de guardarse en la base de datos MongoDB
 const NotificacionSchema = new mongoose.Schema({
     empresa_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Empresa', required: true },
     cliente_id: { type: mongoose.Schema.Types.ObjectId, ref: 'Cliente', required: true },

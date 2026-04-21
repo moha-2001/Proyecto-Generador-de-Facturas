@@ -32,7 +32,7 @@ document.getElementById('registroForm')?.addEventListener('submit', async (e) =>
 
         if (respuesta.ok) {
             alert('¡Registro exitoso! Guardando ID...');
-            // Guardamos el ID de la empresa en el navegador para usarlo luego
+            // Guardamos el ID de la empresa en el navegador para usarlo al iniciar sesión automáticamente
             localStorage.setItem('empresaId', resultado.empresa._id);
             // Redirigir al Dashboard
             window.location.href = 'dashboard.html';

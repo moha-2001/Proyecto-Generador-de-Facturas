@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="css/sidebar.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <aside class="sidebar">
@@ -49,7 +50,37 @@
                 <p class="number" id="facturasPagadas">0</p>
             </article>
         </section>
-        <section class="actions-section">
+
+        <section class="chart-section">
+            <div class="chart-header">
+                <h3>Facturación por Mes</h3>
+                <div class="chart-filters">
+                    <select id="filtroMes">
+                        <option value="todos">Todos los meses</option>
+                        <option value="0">Enero</option>
+                        <option value="1">Febrero</option>
+                        <option value="2">Marzo</option>
+                        <option value="3">Abril</option>
+                        <option value="4">Mayo</option>
+                        <option value="5">Junio</option>
+                        <option value="6">Julio</option>
+                        <option value="7">Agosto</option>
+                        <option value="8">Septiembre</option>
+                        <option value="9">Octubre</option>
+                        <option value="10">Noviembre</option>
+                        <option value="11">Diciembre</option>
+                    </select>
+                    <select id="filtroCliente">
+                        <option value="todos">Todos los clientes</option>
+                        </select>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="graficoFacturas"></canvas>
+            </div>
+        </section>
+
+        <section class="actions-section" style="margin-top: 40px;">
             <h3>Acciones Rápidas</h3>
             <div class="boton-row">
                 <a href="clientes.html" class="btn-action purple">
